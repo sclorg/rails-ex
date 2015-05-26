@@ -1,0 +1,171 @@
+{
+  "apiVersion": "v1beta1",
+  "items": [
+    {
+      "apiVersion": "v1beta3",
+      "kind": "Service",
+      "metadata": {
+        "name": "frontend"
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "web",
+            "port": 5432,
+            "protocol": "TCP",
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "name": "frontend"
+        }
+      }
+    },
+    {
+      "apiVersion": "v1beta1",
+      "kind": "ImageStream",
+      "metadata": {
+        "name": "origin-rails-blog"
+      }
+    },
+    {
+      "apiVersion": "v1beta1",
+      "kind": "ImageStream",
+      "metadata": {
+        "name": "ruby-20-centos7"
+      },
+      "spec": {
+        "dockerImageRepository": "openshift/ruby-20-centos7"
+      }
+    },
+    {
+      "apiVersion": "v1beta1",
+      "kind": "BuildConfig",
+      "metadata": {
+        "name": "rails-blog",
+        "labels": {
+          "name": "rails-blog"
+       }
+      },
+      "parameters": {
+        "output": {
+          "to": {
+            "name": "origin-rails-blog"
+          }
+        },
+        "source": {
+          "git": {
+            "uri": "${GITHUB_URL}"
+          },
+          "type": "Git"
+        },
+        "strategy": {
+          "stiStrategy": {
+            "from": {
+              "kind": "DockerImage",
+              "name": "openshift/ruby-20-centos7:latest"
+            }
+          },
+          "type": "STI"
+        }
+      },
+      "triggers": [
+        {
+          "github": {
+            "secret": "secret101"
+          },
+          "type": "github"
+        },
+        {
+          "generic": {
+            "secret": "secret101"
+          },
+          "type": "generic"
+        },
+        {
+          "imageChange": {},
+          "type": "imageChange"
+        }
+      ]
+    },
+    {
+      "apiVersion": "v1beta1",
+      "kind": "DeploymentConfig",
+      "metadata": {
+        "name": "frontend"
+      },
+      "template": {
+        "controllerTemplate": {
+          "podTemplate": {
+            "desiredState": {
+              "manifest": {
+                "containers": [
+                  {
+                    "env": [
+                      
+                    ],
+                    "image": "origin-rails-blog",
+                    "name": "rails-blog",
+                    "ports": [
+                      {
+                        "containerPort": 8080
+                      }
+                    ]
+                  }
+                ],
+                "version": "v1beta1"
+              }
+            },
+            "labels": {
+              "name": "frontend"
+            }
+          },
+          "replicaSelector": {
+            "name": "frontend"
+          },
+          "replicas": 1
+        }
+      },
+      "triggers": [
+        {
+          "imageChangeParams": {
+            "automatic": true,
+            "containerNames": [
+              "rails-blog"
+            ],
+            "from": {
+              "name": "origin-rails-blog"
+            },
+            "tag": "latest"
+          },
+          "type": "ImageChange"
+        }
+      ]
+    }
+  ],
+  "kind": "Template",
+  "metadata": {
+    "annotations": {
+      "description": "This example shows how to create a simple ruby on rails application in openshift origin v3",
+      "tags": "instant-app,ruby,rails",
+      "iconClass" : "icon-ruby"
+    },
+    "name": "rails-blog-sample"
+  },
+  "parameters": [
+    {
+      "description": "GitHub URL",
+      "name": "GITHUB_URL",
+      "value": "git://github.com/ewolinetz/ruby-rails-example.git"
+    },
+    {
+      "description": "production secret key base",
+      "from": "[a-z0-9]{127}",
+      "generate": "expression",
+      "name": "SECRET_KEY_BASE"
+    }
+  ],
+  "labels": {
+    "template": "application-template-stibuild"
+  }
+}

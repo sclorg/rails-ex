@@ -1,0 +1,40 @@
+# PostgreSQL. Versions 8.2 and up are supported.
+
+<% user = ENV.key?("POSTGRESQL_ROOT_PASSWORD") ? "root" : ENV["POSTGRESQL_USER"] %>
+<% password = ENV.key?("POSTGRESQL_ROOT_PASSWORD") ? ENV["POSTGRESQL_ROOT_PASSWORD"] : ENV["POSTGRESQL_PASSWORD"] %>
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
+  username: <%= user %>
+  password: <%= password %>
+  host: <%= ENV["DATABASE_SERVICE_HOST"] %>
+  port: <%= ENV["DATABASE_SERVICE_PORT"] %>
+  database: <%= ENV["POSTGRESQL_DATABASE"] %>
+
+development:
+  <<: *default
+  #database: blog_development
+  #username:
+  #password:
+  #host:
+  #port:
+
+test:
+  <<: *default
+  #database: blog_test
+  #username:
+  #password:
+  #host:
+  #port:
+
+production:
+  <<: *default
+  #database: blog_production
+  #username: myapp
+  #password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  #host:
+  #port:
