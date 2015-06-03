@@ -2,6 +2,8 @@
 
 require ::File.expand_path('../config/environment', __FILE__)
 
+# FIXME: There should be liveness probe defined for the Pod running this
+# application that checks this URL
 map '/health' do
   health = proc do |env|
     [200, { "Content-Type" => "text/html" }, ["1"]]
