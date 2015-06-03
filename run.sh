@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 
-echo "sourcing .bashrc ..."
+# TODO: This should not be needed in future when SCL collections will be enabled
+#       by default.
+echo "Enabling SCL collections ..."
 source .bashrc
 
-echo "executing bundle exec 'rake db:migrate' ..."
+echo "Executing bundle exec 'rake db:migrate' ..."
 bundle exec 'rake db:migrate'
-echo "done!"

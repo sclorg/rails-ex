@@ -1,330 +1,386 @@
 {
-  "apiVersion": "v1beta1",
-  "items": [
+  "kind": "Template",
+  "apiVersion": "v1beta3",
+  "metadata": {
+    "name": "rails-blog-sample",
+    "creationTimestamp": null,
+    "annotations": {
+      "description": "This example shows how to create a simple ruby on rails application in openshift origin v3",
+      "iconClass": "icon-ruby",
+      "tags": "instant-app,ruby,postgresql,rails"
+    }
+  },
+  "objects": [
     {
-      "apiVersion": "v1beta3",
       "kind": "Service",
+      "apiVersion": "v1beta3",
       "metadata": {
-        "name": "frontend"
+        "name": "frontend",
+        "creationTimestamp": null
       },
       "spec": {
         "ports": [
           {
             "name": "web",
-            "port": 5432,
             "protocol": "TCP",
-            "targetPort": 8080
+            "port": 5432,
+            "targetPort": 8080,
+            "nodePort": 0
           }
         ],
         "selector": {
           "name": "frontend"
-        }
+        },
+        "portalIP": "",
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+      },
+      "status": {
+        "loadBalancer": {}
       }
     },
     {
-      "apiVersion": "v1beta1",
       "kind": "ImageStream",
+      "apiVersion": "v1beta3",
       "metadata": {
-        "name": "origin-rails-blog"
+        "name": "origin-rails-blog",
+        "creationTimestamp": null
+      },
+      "spec": {},
+      "status": {
+        "dockerImageRepository": ""
       }
     },
     {
-      "apiVersion": "v1beta1",
       "kind": "ImageStream",
+      "apiVersion": "v1beta3",
       "metadata": {
-        "name": "ruby-20-centos7"
+        "name": "ruby-20-centos7",
+        "creationTimestamp": null
       },
       "spec": {
         "dockerImageRepository": "openshift/ruby-20-centos7"
+      },
+      "status": {
+        "dockerImageRepository": ""
       }
     },
     {
-      "apiVersion": "v1beta1",
       "kind": "BuildConfig",
+      "apiVersion": "v1beta3",
       "metadata": {
         "name": "rails-blog",
+        "creationTimestamp": null,
         "labels": {
           "name": "rails-blog"
-       }
+        }
       },
-      "parameters": {
-        "output": {
-          "to": {
-            "name": "origin-rails-blog"
+      "spec": {
+        "triggers": [
+          {
+            "type": "github",
+            "github": {
+              "secret": "secret101"
+            }
+          },
+          {
+            "type": "generic",
+            "generic": {
+              "secret": "secret101"
+            }
+          },
+          {
+            "type": "imageChange",
+            "imageChange": {}
           }
-        },
+        ],
         "source": {
+          "type": "Git",
           "git": {
             "uri": "${GITHUB_URL}"
-          },
-          "type": "Git"
+          }
         },
         "strategy": {
-          "stiStrategy": {
+          "type": "Source",
+          "sourceStrategy": {
             "from": {
               "kind": "DockerImage",
               "name": "openshift/ruby-20-centos7:latest"
-            }
-          },
-          "type": "STI"
-        }
+            },
+            "incremental": true
+          }
+        },
+        "output": {
+          "to": {
+            "kind": "ImageStreamTag",
+            "name": "origin-rails-blog:latest"
+          }
+        },
+        "resources": {}
       },
-      "triggers": [
-        {
-          "github": {
-            "secret": "secret101"
-          },
-          "type": "github"
-        },
-        {
-          "generic": {
-            "secret": "secret101"
-          },
-          "type": "generic"
-        },
-        {
-          "imageChange": {},
-          "type": "imageChange"
-        }
-      ]
+      "status": {
+        "lastVersion": 0
+      }
     },
     {
-      "apiVersion": "v1beta1",
       "kind": "DeploymentConfig",
+      "apiVersion": "v1beta3",
       "metadata": {
-        "name": "frontend"
+        "name": "frontend",
+        "creationTimestamp": null
       },
-      "template": {
-        "controllerTemplate": {
-          "podTemplate": {
-            "desiredState": {
-              "manifest": {
-                "containers": [
-                  {
-                    "env": [
-                      {
-                        "name": "POSTGRESQL_USER",
-                        "value": "${POSTGRESQL_USER}"
-                      },
-                      {
-                        "name": "POSTGRESQL_PASSWORD",
-                        "value": "${POSTGRESQL_PASSWORD}"
-                      },
-                      {
-                        "name": "POSTGRESQL_DATABASE",
-                        "value": "${POSTGRESQL_DATABASE}"
-                      },
-                      {
-                        "name": "SECRET_KEY_BASE",
-                        "value": "${SECRET_KEY_BASE}"
-                      },
-                      {
-                        "name": "POSTGRESQL_MAX_CONNECTIONS",
-                        "value": "${POSTGRESQL_MAX_CONNECTIONS}"
-                      },
-                      {
-                        "name": "POSTGRESQL_SHARED_BUFFERS",
-                        "value": "${POSTGRESQL_SHARED_BUFFERS}"
-                      }
-                    ],
-                    "image": "origin-rails-blog",
-                    "name": "rails-blog",
-                    "ports": [
-                      {
-                        "containerPort": 8080
-                      }
-                    ]
-                  }
-                ],
-                "version": "v1beta1"
-              }
-            },
-            "labels": {
-              "name": "frontend"
-            }
-          },
-          "replicaSelector": {
-            "name": "frontend"
-          },
-          "replicas": 1
-        },
+      "spec": {
         "strategy": {
           "type": "Recreate",
           "recreateParams": {
             "post": {
               "failurePolicy": "Abort",
               "execNewPod": {
-                "containerName": "rails-blog",
                 "command": [
                   "./run.sh"
-                ]
+                ],
+                "containerName": "rails-blog"
               }
             }
+          },
+          "resources": {}
+        },
+        "triggers": [
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "rails-blog"
+              ],
+              "from": {
+                "name": "origin-rails-blog:latest"
+              },
+              "lastTriggeredImage": ""
+            }
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "name": "frontend"
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "name": "frontend"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "rails-blog",
+                "image": "origin-rails-blog",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "POSTGRESQL_USER",
+                    "value": "${POSTGRESQL_USER}"
+                  },
+                  {
+                    "name": "POSTGRESQL_PASSWORD",
+                    "value": "${POSTGRESQL_PASSWORD}"
+                  },
+                  {
+                    "name": "POSTGRESQL_DATABASE",
+                    "value": "${POSTGRESQL_DATABASE}"
+                  },
+                  {
+                    "name": "SECRET_KEY_BASE",
+                    "value": "${SECRET_KEY_BASE}"
+                  },
+                  {
+                    "name": "POSTGRESQL_MAX_CONNECTIONS",
+                    "value": "${POSTGRESQL_MAX_CONNECTIONS}"
+                  },
+                  {
+                    "name": "POSTGRESQL_SHARED_BUFFERS",
+                    "value": "${POSTGRESQL_SHARED_BUFFERS}"
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "imagePullPolicy": "IfNotPresent",
+                "capabilities": {},
+                "securityContext": {
+                  "capabilities": {},
+                  "privileged": false
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "dnsPolicy": "ClusterFirst"
           }
         }
       },
-      "triggers": [
-        {
-          "imageChangeParams": {
-            "automatic": true,
-            "containerNames": [
-              "rails-blog"
-            ],
-            "from": {
-              "name": "origin-rails-blog"
-            },
-            "tag": "latest"
-          },
-          "type": "ImageChange"
-        }
-      ]
+      "status": {}
     },
     {
-      "apiVersion": "v1beta3",
       "kind": "Service",
+      "apiVersion": "v1beta3",
       "metadata": {
-        "name": "database"
+        "name": "database",
+        "creationTimestamp": null
       },
       "spec": {
         "ports": [
           {
             "name": "db",
-            "port": 5434,
             "protocol": "TCP",
-            "targetPort": 5432
+            "port": 5434,
+            "targetPort": 5432,
+            "nodePort": 0
           }
         ],
         "selector": {
           "name": "database"
-        }
+        },
+        "portalIP": "",
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+      },
+      "status": {
+        "loadBalancer": {}
       }
     },
     {
-      "apiVersion": "v1beta1",
       "kind": "DeploymentConfig",
+      "apiVersion": "v1beta3",
       "metadata": {
-        "name": "database"
+        "name": "database",
+        "creationTimestamp": null
       },
-      "template": {
-        "controllerTemplate": {
-          "podTemplate": {
-            "desiredState": {
-              "manifest": {
-                "containers": [
-                  {
-                    "env": [
-                      {
-                        "name": "POSTGRESQL_USER",
-                        "value": "${POSTGRESQL_USER}"
-                      },
-                      {
-                        "name": "POSTGRESQL_PASSWORD",
-                        "value": "${POSTGRESQL_PASSWORD}"
-                      },
-                      {
-                        "name": "POSTGRESQL_DATABASE",
-                        "value": "${POSTGRESQL_DATABASE}"
-                      },
-                      {
-                        "name": "POSTGRESQL_MAX_CONNECTIONS",
-                        "value": "${POSTGRESQL_MAX_CONNECTIONS}"
-                      },
-                      {
-                        "name": "POSTGRESQL_SHARED_BUFFERS",
-                        "value": "${POSTGRESQL_SHARED_BUFFERS}"
-                      }
-
-                    ],
-                    "image": "openshift/postgresql-92-centos7",
-                    "name": "rails-blog-database",
-                    "ports": [
-                      {
-                        "containerPort": 5432
-                      }
-                    ]
-                  }
-                ],
-                "version": "v1beta1"
-              }
-            },
+      "spec": {
+        "strategy": {
+          "type": "Recreate",
+          "resources": {}
+        },
+        "triggers": [
+          {
+            "type": "ConfigChange"
+          }
+        ],
+        "replicas": 1,
+        "selector": {
+          "name": "database"
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
             "labels": {
               "name": "database"
             }
           },
-          "replicaSelector": {
-            "name": "database"
-          },
-          "replicas": 1
-        },
-        "strategy": {
-          "type": "Recreate"
+          "spec": {
+            "containers": [
+              {
+                "name": "rails-blog-database",
+                "image": "openshift/postgresql-92-centos7",
+                "ports": [
+                  {
+                    "containerPort": 5432,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "POSTGRESQL_USER",
+                    "value": "${POSTGRESQL_USER}"
+                  },
+                  {
+                    "name": "POSTGRESQL_PASSWORD",
+                    "value": "${POSTGRESQL_PASSWORD}"
+                  },
+                  {
+                    "name": "POSTGRESQL_DATABASE",
+                    "value": "${POSTGRESQL_DATABASE}"
+                  },
+                  {
+                    "name": "POSTGRESQL_MAX_CONNECTIONS",
+                    "value": "${POSTGRESQL_MAX_CONNECTIONS}"
+                  },
+                  {
+                    "name": "POSTGRESQL_SHARED_BUFFERS",
+                    "value": "${POSTGRESQL_SHARED_BUFFERS}"
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "imagePullPolicy": "IfNotPresent",
+                "capabilities": {},
+                "securityContext": {
+                  "capabilities": {},
+                  "privileged": false
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "dnsPolicy": "ClusterFirst"
+          }
         }
       },
-      "triggers": [
-        {
-          "type": "ConfigChange"
-        }
-      ]
+      "status": {}
     }
   ],
-  "kind": "Template",
-  "metadata": {
-    "annotations": {
-      "description": "This example shows how to create a simple ruby on rails application in openshift origin v3",
-      "tags": "instant-app,ruby,postgresql,rails",
-      "iconClass" : "icon-ruby"
-    },
-    "name": "rails-blog-sample"
-  },
   "parameters": [
     {
-      "description": "GitHub URL",
       "name": "GITHUB_URL",
+      "description": "GitHub URL",
       "value": "git://github.com/ewolinetz/ruby-rails-example.git"
     },
     {
+      "name": "ADMIN_USERNAME",
       "description": "administrator username",
-      "from": "admin[A-Z0-9]{3}",
       "generate": "expression",
-      "name": "ADMIN_USERNAME"
+      "from": "admin[A-Z0-9]{3}"
     },
     {
+      "name": "ADMIN_PASSWORD",
       "description": "administrator password",
-      "from": "[a-zA-Z0-9]{8}",
       "generate": "expression",
-      "name": "ADMIN_PASSWORD"
+      "from": "[a-zA-Z0-9]{8}"
     },
     {
+      "name": "POSTGRESQL_USER",
       "description": "database username",
-      "from": "user[A-Z0-9]{3}",
       "generate": "expression",
-      "name": "POSTGRESQL_USER"
+      "from": "user[A-Z0-9]{3}"
     },
     {
+      "name": "POSTGRESQL_PASSWORD",
       "description": "database password",
-      "from": "[a-zA-Z0-9]{8}",
       "generate": "expression",
-      "name": "POSTGRESQL_PASSWORD"
+      "from": "[a-zA-Z0-9]{8}"
     },
     {
-      "description": "database name",
       "name": "POSTGRESQL_DATABASE",
+      "description": "database name",
       "value": "root"
     },
     {
+      "name": "SECRET_KEY_BASE",
       "description": "production secret key base",
-      "from": "[a-z0-9]{127}",
       "generate": "expression",
-      "name": "SECRET_KEY_BASE"
+      "from": "[a-z0-9]{127}"
     },
     {
-      "description": "database max connections",
       "name": "POSTGRESQL_MAX_CONNECTIONS",
+      "description": "database max connections",
       "value": "10"
     },
     {
-      "description": "database shared buffers",
       "name": "POSTGRESQL_SHARED_BUFFERS",
+      "description": "database shared buffers",
       "value": "12MB"
     }
   ],
@@ -332,3 +388,4 @@
     "template": "application-template-stibuild"
   }
 }
+

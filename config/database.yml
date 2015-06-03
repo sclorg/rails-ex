@@ -1,14 +1,14 @@
 # PostgreSQL. Versions 8.2 and up are supported.
 
-<% user = ENV.key?("POSTGRESQL_ROOT_PASSWORD") ? "root" : ENV["POSTGRESQL_USER"] %>
-<% password = ENV.key?("POSTGRESQL_ROOT_PASSWORD") ? ENV["POSTGRESQL_ROOT_PASSWORD"] : ENV["POSTGRESQL_PASSWORD"] %>
+<% user = ENV.key?("POSTGRESQL_ADMIN_PASSWORD") ? "root" : ENV["POSTGRESQL_USER"] %>
+<% password = ENV.key?("POSTGRESQL_ADMIN_PASSWORD") ? ENV["POSTGRESQL_ADMIN_PASSWORD"] : ENV["POSTGRESQL_PASSWORD"] %>
 
 default: &default
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
+  pool: <%= ENV["POSTGRESQL_MAX_CONNECTIONS"] || 5 %>
   username: <%= user %>
   password: <%= password %>
   host: <%= ENV["DATABASE_SERVICE_HOST"] %>
