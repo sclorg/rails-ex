@@ -154,7 +154,7 @@
                 "rails-blog"
               ],
               "from": {
-                "name": "origin-rails-blog"
+                "name": "origin-rails-blog:latest"
               },
               "lastTriggeredImage": ""
             }
@@ -388,3 +388,4 @@
     "template": "application-template-stibuild"
   }
 }
+
