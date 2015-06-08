@@ -5,7 +5,7 @@
     "name": "rails-blog-sample",
     "creationTimestamp": null,
     "annotations": {
-      "description": "This example shows how to create a simple ruby on rails application in openshift origin v3",
+      "description": "A simple Ruby on Rails® blog application (with PostgreSQL).",
       "iconClass": "icon-ruby",
       "tags": "instant-app,ruby,postgresql,rails"
     }
@@ -40,6 +40,20 @@
       }
     },
     {
+      "kind": "Route",
+      "apiVersion": "v1beta3",
+      "metadata": {
+          "name": "frontend-route",
+          "creationTimestamp": null
+      },
+      "spec": {
+          "host" : "frontend-route",
+          "to": {
+              "kind" : "Service",
+              "name" : "frontend"
+          }
+      }
+    },     {
       "kind": "ImageStream",
       "apiVersion": "v1beta3",
       "metadata": {
@@ -382,6 +396,11 @@
       "name": "POSTGRESQL_SHARED_BUFFERS",
       "description": "database shared buffers",
       "value": "12MB"
+    },
+    {
+      "name": "FRONTEND_ROUTE",
+      "description": "The exposed hostname that will route Rails frontend service.",
+      "value": "rails-frontend.apps"
     }
   ],
   "labels": {
