@@ -48,8 +48,8 @@ Development environment can help you debug problems in your application in the s
 2. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
 3. Clone your repository to your OpenShift server
 3. Update the GitHub repository url in the instant app configuration to match your forked url 
-2. Add a Ruby application from the ruby-rails-example template 
-`osc process -f example/template/ruby-rails-example.json | create -f - `
+2. Add a Ruby application from the rails template
+`osc process -f openshift/templates/rails.json | create -f - `
 3. Start the build  
 `osc start-build rails-blog`
 4. Watch your build progress  
@@ -78,8 +78,8 @@ In this case, the IP for frontend is 172.30.196.123 and it is on port 5432.
 2. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
 3. Clone your repository to your OpenShift server
 3. Update the GitHub repository url in the instant app configuration to match your forked url 
-2. Add a Ruby application from the ruby-rails-example-with-postgresql template 
-`osc process -f example/template/ruby-rails-example-with-postgresql.json | create -f - `
+2. Add a Ruby application from the rails-postgresql template
+`osc process -f openshift/templates/rails-postgresql.json | create -f - `
 3. Start the build  
 `osc start-build rails-blog`
 4. Watch your build progress  
