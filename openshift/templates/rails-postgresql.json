@@ -1,9 +1,8 @@
 {
   "kind": "Template",
-  "apiVersion": "v1beta3",
+  "apiVersion": "v1",
   "metadata": {
     "name": "rails-postgresql-example",
-    "creationTimestamp": null,
     "annotations": {
       "description": "A simple Ruby on Rails® blog application (with PostgreSQL).",
       "iconClass": "icon-ruby",
@@ -13,38 +12,28 @@
   "objects": [
     {
       "kind": "Service",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-        "name": "frontend",
-        "creationTimestamp": null
+        "name": "frontend"
       },
       "spec": {
         "ports": [
           {
             "name": "web",
-            "protocol": "TCP",
             "port": 5432,
-            "targetPort": 8080,
-            "nodePort": 0
+            "targetPort": 8080
           }
         ],
         "selector": {
           "name": "frontend"
-        },
-        "portalIP": "",
-        "type": "ClusterIP",
-        "sessionAffinity": "None"
-      },
-      "status": {
-        "loadBalancer": {}
+        }
       }
     },
     {
       "kind": "Route",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-          "name": "${FRONTEND_ROUTE}",
-          "creationTimestamp": null
+          "name": "${FRONTEND_ROUTE}"
       },
       "spec": {
           "host" : "${FRONTEND_ROUTE}",
@@ -56,36 +45,26 @@
     },
     {
       "kind": "ImageStream",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-        "name": "origin-rails-blog",
-        "creationTimestamp": null
-      },
-      "spec": {},
-      "status": {
-        "dockerImageRepository": ""
+        "name": "origin-rails-blog"
       }
     },
     {
       "kind": "ImageStream",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-        "name": "ruby-20-centos7",
-        "creationTimestamp": null
+        "name": "ruby-20-centos7"
       },
       "spec": {
         "dockerImageRepository": "openshift/ruby-20-centos7"
-      },
-      "status": {
-        "dockerImageRepository": ""
       }
     },
     {
       "kind": "BuildConfig",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
         "name": "rails-blog",
-        "creationTimestamp": null,
         "labels": {
           "name": "rails-blog"
         }
@@ -93,20 +72,19 @@
       "spec": {
         "triggers": [
           {
-            "type": "github",
+            "type": "GitHub",
             "github": {
               "secret": "secret101"
             }
           },
           {
-            "type": "generic",
+            "type": "Generic",
             "generic": {
               "secret": "secret101"
             }
           },
           {
-            "type": "imageChange",
-            "imageChange": {}
+            "type": "ImageChange"
           }
         ],
         "source": {
@@ -130,19 +108,14 @@
             "kind": "ImageStreamTag",
             "name": "origin-rails-blog:latest"
           }
-        },
-        "resources": {}
-      },
-      "status": {
-        "lastVersion": 0
+        }
       }
     },
     {
       "kind": "DeploymentConfig",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-        "name": "frontend",
-        "creationTimestamp": null
+        "name": "frontend"
       },
       "spec": {
         "strategy": {
@@ -157,8 +130,7 @@
                 "containerName": "rails-blog"
               }
             }
-          },
-          "resources": {}
+          }
         },
         "triggers": [
           {
@@ -170,8 +142,7 @@
               ],
               "from": {
                 "name": "origin-rails-blog:latest"
-              },
-              "lastTriggeredImage": ""
+              }
             }
           }
         ],
@@ -181,7 +152,6 @@
         },
         "template": {
           "metadata": {
-            "creationTimestamp": null,
             "labels": {
               "name": "frontend"
             }
@@ -193,8 +163,7 @@
                 "image": "origin-rails-blog",
                 "ports": [
                   {
-                    "containerPort": 8080,
-                    "protocol": "TCP"
+                    "containerPort": 8080
                   }
                 ],
                 "env": [
@@ -222,63 +191,41 @@
                     "name": "POSTGRESQL_SHARED_BUFFERS",
                     "value": "${POSTGRESQL_SHARED_BUFFERS}"
                   }
-                ],
-                "resources": {},
-                "terminationMessagePath": "/dev/termination-log",
-                "imagePullPolicy": "IfNotPresent",
-                "capabilities": {},
-                "securityContext": {
-                  "capabilities": {},
-                  "privileged": false
-                }
+                ]
               }
-            ],
-            "restartPolicy": "Always",
-            "dnsPolicy": "ClusterFirst"
+            ]
           }
         }
-      },
-      "status": {}
+      }
     },
     {
       "kind": "Service",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-        "name": "database",
-        "creationTimestamp": null
+        "name": "database"
       },
       "spec": {
         "ports": [
           {
             "name": "db",
-            "protocol": "TCP",
             "port": 5434,
-            "targetPort": 5432,
-            "nodePort": 0
+            "targetPort": 5432
           }
         ],
         "selector": {
           "name": "database"
-        },
-        "portalIP": "",
-        "type": "ClusterIP",
-        "sessionAffinity": "None"
-      },
-      "status": {
-        "loadBalancer": {}
+        }
       }
     },
     {
       "kind": "DeploymentConfig",
-      "apiVersion": "v1beta3",
+      "apiVersion": "v1",
       "metadata": {
-        "name": "database",
-        "creationTimestamp": null
+        "name": "database"
       },
       "spec": {
         "strategy": {
-          "type": "Recreate",
-          "resources": {}
+          "type": "Recreate"
         },
         "triggers": [
           {
@@ -291,7 +238,6 @@
         },
         "template": {
           "metadata": {
-            "creationTimestamp": null,
             "labels": {
               "name": "database"
             }
@@ -303,8 +249,7 @@
                 "image": "openshift/postgresql-92-centos7",
                 "ports": [
                   {
-                    "containerPort": 5432,
-                    "protocol": "TCP"
+                    "containerPort": 5432
                   }
                 ],
                 "env": [
@@ -328,23 +273,12 @@
                     "name": "POSTGRESQL_SHARED_BUFFERS",
                     "value": "${POSTGRESQL_SHARED_BUFFERS}"
                   }
-                ],
-                "resources": {},
-                "terminationMessagePath": "/dev/termination-log",
-                "imagePullPolicy": "IfNotPresent",
-                "capabilities": {},
-                "securityContext": {
-                  "capabilities": {},
-                  "privileged": false
-                }
+                ]
               }
-            ],
-            "restartPolicy": "Always",
-            "dnsPolicy": "ClusterFirst"
+            ]
           }
         }
-      },
-      "status": {}
+      }
     }
   ],
   "parameters": [
@@ -408,4 +342,3 @@
     "template": "rails-postgresql-example"
   }
 }
-
