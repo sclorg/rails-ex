@@ -272,7 +272,7 @@ $ git push</pre>
                   Once an administrator has created a PostgreSQL database service for you to connect with you can add the following environment variables to your deploymentConfig to ensure all your frontend pods have access to these environment variables.
                   
 <pre>osc env dc/frontend DATABASE_SERVICE_HOST=&lt;database service ip&gt;
-osc env dc/frontend DATABASE_SERVICE_POST=&lt;database service port&gt;
+osc env dc/frontend DATABASE_SERVICE_PORT=&lt;database service port&gt;
 osc env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
 osc env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
 osc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;</pre>
