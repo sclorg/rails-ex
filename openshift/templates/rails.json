@@ -4,28 +4,34 @@
   "metadata": {
     "name": "rails-example",
     "annotations": {
-      "description": "A simple Ruby on Rails® blog application (no DB).",
-      "iconClass": "icon-ruby",
-      "tags": "instant-app,ruby,rails"
+      "description": "An example Rails application with no database",
+      "tags": "instant-app,ruby,rails",
+      "iconClass": "icon-ruby"
     }
+  },
+  "labels": {
+    "template": "rails-example"
   },
   "objects": [
     {
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
-        "name": "frontend"
+        "name": "rails-frontend",
+        "annotations": {
+          "description": "Exposes and load balances the application pods"
+        }
       },
       "spec": {
         "ports": [
           {
             "name": "web",
-            "port": 5432,
+            "port": 8080,
             "targetPort": 8080
           }
         ],
         "selector": {
-          "name": "frontend"
+          "name": "rails-frontend"
         }
       }
     },
@@ -33,98 +39,84 @@
       "kind": "Route",
       "apiVersion": "v1",
       "metadata": {
-          "name": "${FRONTEND_ROUTE}"
+        "name": "rails-route"
       },
       "spec": {
-          "host" : "${FRONTEND_ROUTE}",
-          "to": {
-              "kind" : "Service",
-              "name" : "frontend"
-          }
+        "host": "${FRONTEND_ROUTE}",
+        "to": {
+          "kind": "Service",
+          "name": "rails-frontend"
+        }
       }
     },
     {
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "origin-rails-blog"
-      }
-    },
-    {
-      "kind": "ImageStream",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "ruby-20-centos7"
-      },
-      "spec": {
-        "dockerImageRepository": "openshift/ruby-20-centos7"
+        "name": "rails-example",
+        "annotations": {
+          "description": "Keeps track of changes in the application image"
+        }
       }
     },
     {
       "kind": "BuildConfig",
       "apiVersion": "v1",
       "metadata": {
-        "name": "rails-blog",
-        "labels": {
-          "name": "rails-blog"
+        "name": "rails-example",
+        "annotations": {
+          "description": "Defines how to build the application"
         }
       },
       "spec": {
-        "triggers": [
-          {
-            "type": "GitHub",
-            "github": {
-              "secret": "secret101"
-            }
-          },
-          {
-            "type": "Generic",
-            "generic": {
-              "secret": "secret101"
-            }
-          },
-          {
-            "type": "ImageChange"
-          }
-        ],
         "source": {
           "type": "Git",
           "git": {
-            "uri": "${GITHUB_URL}"
-          }
+            "uri": "${SOURCE_REPOSITORY_URL}"
+          },
+          "contextDir": "${CONTEXT_DIR}"
         },
         "strategy": {
           "type": "Source",
           "sourceStrategy": {
             "from": {
-              "kind": "DockerImage",
-              "name": "openshift/ruby-20-centos7:latest"
-            },
-            "incremental": true
+              "kind": "ImageStreamTag",
+              "namespace": "openshift",
+              "name": "ruby:2.0"
+            }
           }
         },
         "output": {
           "to": {
-            "kind": "ImageStreamTag",
-            "name": "origin-rails-blog:latest"
+            "kind": "ImageStream",
+            "name": "rails-example"
           }
-        }
+        },
+        "triggers": [
+          {
+            "type": "ImageChange"
+          },
+          {
+            "type": "GitHub",
+            "github": {
+              "secret": "${GITHUB_WEBHOOK_SECRET}"
+            }
+          }
+        ]
       }
     },
     {
       "kind": "DeploymentConfig",
       "apiVersion": "v1",
       "metadata": {
-        "name": "frontend"
+        "name": "rails-frontend",
+        "annotations": {
+          "description": "Defines how to deploy the application server"
+        }
       },
       "spec": {
         "strategy": {
-          "type": "Rolling",
-          "rollingParams": {
-            "updatePeriodSeconds": 1,
-            "intervalSeconds": 1,
-            "timeoutSeconds": 120
-          }
+          "type": "Rolling"
         },
         "triggers": [
           {
@@ -132,29 +124,34 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "rails-blog"
+                "rails-example"
               ],
               "from": {
-                "name": "origin-rails-blog:latest"
+                "kind": "ImageStreamTag",
+                "name": "rails-example:latest"
               }
             }
+          },
+          {
+            "type": "ConfigChange"
           }
         ],
         "replicas": 1,
         "selector": {
-          "name": "frontend"
+          "name": "rails-frontend"
         },
         "template": {
           "metadata": {
+            "name": "rails-frontend",
             "labels": {
-              "name": "frontend"
+              "name": "rails-frontend"
             }
           },
           "spec": {
             "containers": [
               {
-                "name": "rails-blog",
-                "image": "origin-rails-blog",
+                "name": "rails-example",
+                "image": "rails-example",
                 "ports": [
                   {
                     "containerPort": 8080
@@ -169,23 +166,30 @@
   ],
   "parameters": [
     {
-      "name": "GITHUB_URL",
-      "description": "The URL with your Rails application source code.",
-      "value": "git://github.com/ewolinetz/ruby-rails-example.git"
+      "name": "SOURCE_REPOSITORY_URL",
+      "description": "The URL of the repository with your application source code",
+      "value": "https://github.com/openshift/rails-ex.git"
     },
     {
-      "name": "SECRET_KEY_BASE",
-      "description": "Your secret key for verifying the integrity of signed cookies.",
-      "generate": "expression",
-      "from": "[a-z0-9]{127}"
+      "name": "CONTEXT_DIR",
+      "description": "Set this to the relative path to your project if it is not in the root of your repository"
     },
     {
       "name": "FRONTEND_ROUTE",
-      "description": "The exposed hostname that will route Rails frontend service.",
-      "value": "rails-frontend.apps"
+      "description": "The exposed hostname that will route to the Rails service",
+      "value": "rails.app"
+    },
+    {
+      "name": "GITHUB_WEBHOOK_SECRET",
+      "description": "A secret string used to configure the GitHub webhook",
+      "generate": "expression",
+      "from": "[a-zA-Z0-9]{40}"
+    },
+    {
+      "name": "SECRET_KEY_BASE",
+      "description": "Your secret key for verifying the integrity of signed cookies",
+      "generate": "expression",
+      "from": "[a-z0-9]{127}"
     }
-  ],
-  "labels": {
-    "template": "rails-example"
-  }
+  ]
 }
