@@ -31,8 +31,8 @@ OpenShift stores these generated values in configuration files that only exist f
 TLDR: OpenShift can generate and expose environment variables to our application automatically. Look at this quickstart for an example.
 
 ###Development mode
-When you develop your Rails application in OpenShift, you can also enable the 'development' environment by setting the RAILS_ENV environment variable for your deploymentConfiguration, using the `osc` client, like:  
-`osc env dc/frontend RAILS_ENV=development`  
+When you develop your Rails application in OpenShift, you can also enable the 'development' environment by setting the RAILS_ENV environment variable for your deploymentConfiguration, using the `oc` client, like:  
+`oc env dc/frontend RAILS_ENV=development`  
 
 If you do so, OpenShift will run your application under 'development' mode. In development mode, your application will:  
 *  Show more detailed errors in the browser  
@@ -49,13 +49,13 @@ Development environment can help you debug problems in your application in the s
 3. Clone your repository to your OpenShift server
 3. Update the GitHub repository url in the instant app configuration to match your forked url 
 2. Add a Ruby application from the rails template
-`osc process -f openshift/templates/rails.json | create -f - `
+`oc process -f openshift/templates/rails.json | oc create -f - `
 3. Start the build  
-`osc start-build rails-blog`
+`oc start-build rails-blog`
 4. Watch your build progress  
-`osc build-logs -f rails-blog-1`
+`oc build-logs -f rails-blog-1`
 5. Wait for frontend pods to start up (this can take a few minutes):  
-`osc get pods`  
+`oc get pods`  
 Sample output:  
 >POD                IP           CONTAINER(S)   IMAGE(S)                                                                                                            HOST                               LABELS                                                                                             STATUS       CREATED     MESSAGE  
 frontend-1-uuc9n   172.17.0.8                                                                                                                                      ip-10-178-206-122/10.178.206.122   deployment=frontend-1,deploymentconfig=frontend,name=frontend                                      Running      7 seconds   
@@ -64,7 +64,7 @@ rails-blog-1                                                                    
                                 sti-build      openshift/origin-sti-builder:v0.5.1                                                                                                                                                                                                                       Terminated   5 minutes   exit code 0  
 
 6. Check the IP and port the frontend service is running on:  
-`osc get services`  
+`oc get services`  
 Sample output:  
 >NAME       LABELS                                   SELECTOR        IP(S)            PORT(S)  
 frontend   template=application-template-stibuild   name=frontend   172.30.196.123   5432/TCP  
@@ -79,13 +79,13 @@ In this case, the IP for frontend is 172.30.196.123 and it is on port 5432.
 3. Clone your repository to your OpenShift server
 3. Update the GitHub repository url in the instant app configuration to match your forked url 
 2. Add a Ruby application from the rails-postgresql template
-`osc process -f openshift/templates/rails-postgresql.json | create -f - `
+`oc process -f openshift/templates/rails-postgresql.json | oc create -f - `
 3. Start the build  
-`osc start-build rails-blog`
+`oc start-build rails-blog`
 4. Watch your build progress  
-`osc build-log -f rails-blog-1`  
+`oc build-log -f rails-blog-1`  
 5. Wait for frontend and database pods to be started (this can take a few minutes):  
-`osc get pods`  
+`oc get pods`  
 Sample output:  
 >POD                                IP            CONTAINER(S)          IMAGE(S)                                                                                                            HOST                               LABELS                                                                                             STATUS       CREATED      MESSAGE
 database-1-ablzw                   172.17.0.10                                                                                                                                             ip-10-178-206-122/10.178.206.122   deployment=database-1,deploymentconfig=database,name=database                                      Running      3 minutes    
@@ -98,7 +98,7 @@ rails-blog-1                                                                    
                                                  sti-build             openshift/origin-sti-builder:v0.5.1                                                                                                                                                                                                                       Terminated   3 minutes    exit code 0
 
 6. Check the IP and port the frontend service is running on:  
-`osc get services`  
+`oc get services`  
 Sample output:  
 >NAME       LABELS                                   SELECTOR        IP(S)            PORT(S)
 database   template=application-template-stibuild   name=database   172.30.49.70     5434/TCP

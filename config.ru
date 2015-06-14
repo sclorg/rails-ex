@@ -271,11 +271,11 @@ $ git push</pre>
                   It will also be necessary to update your application to talk to your database back-end.  The <code>config/database.yml</code> file used by rails was set up in such a way that it will accept environment variables for your connection information that you pass to it.
                   Once an administrator has created a PostgreSQL database service for you to connect with you can add the following environment variables to your deploymentConfig to ensure all your frontend pods have access to these environment variables.
                   
-<pre>osc env dc/frontend DATABASE_SERVICE_HOST=&lt;database service ip&gt;
-osc env dc/frontend DATABASE_SERVICE_PORT=&lt;database service port&gt;
-osc env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
-osc env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
-osc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;</pre>
+<pre>oc env dc/frontend DATABASE_SERVICE_HOST=&lt;database service ip&gt;
+oc env dc/frontend DATABASE_SERVICE_PORT=&lt;database service port&gt;
+oc env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
+oc env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
+oc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;</pre>
                   </p>
 
             </section>
@@ -289,7 +289,7 @@ osc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;</p
                 <p>You can use the OpenShift web console to enable additional services via containers and images, add collaborator access authorizations, designate custom domain aliases, and manage domain memberships.</p>
 
                 <h3>Command Line Tools</h3>
-                <p>Installing the <a href="https://developers.openshift.com/en/managing-client-tools.html">OpenShift OSC client tools</a> allows you complete control of your cloud environment. Read more on how to manage your application from the command line in our <a href="https://www.openshift.com/user-guide">User Guide</a>.
+                <p>Installing the <a href="https://developers.openshift.com/en/managing-client-tools.html">OpenShift OC client tools</a> allows you complete control of your cloud environment. Read more on how to manage your application from the command line in our <a href="https://www.openshift.com/user-guide">User Guide</a>.
                 </p>
 
                 <h2>Development Resources</h2>
