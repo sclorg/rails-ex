@@ -255,11 +255,19 @@ $ git push</pre>
                   It will also be necessary to update your application to talk to your database back-end.  The <code>config/database.yml</code> file used by rails was set up in such a way that it will accept environment variables for your connection information that you pass to it.
                   Once an administrator has created a PostgreSQL database service for you to connect with you can add the following environment variables to your deploymentConfig to ensure all your frontend pods have access to these environment variables.
                   
-<pre>oc env dc/frontend DATABASE_SERVICE_HOST=&lt;database service ip&gt;
-oc env dc/frontend DATABASE_SERVICE_PORT=&lt;database service port&gt;
-oc env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
-oc env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
-oc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;</pre>
+<pre>
+osc env dc/frontend DATABASE_SERVICE_NAME=&lt;database service name&gt;
+osc env dc/frontend &lt;DATABASE_SERVICE_NAME&gt;_SERVICE_HOST=&lt;database service ip&gt;
+osc env dc/frontend &lt;DATABASE_SERVICE_NAME&gt;_SERVICE_PORT=&lt;database service port&gt;
+osc env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
+osc env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
+osc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;
+</pre>
+                  </p>
+                  <p>
+                  Note: If the database service is created in the same project as the frontend pod,
+                  the *_SERVICE_HOST and *SERVICE_PORT environment variables will be automatically
+                  created.
                   </p>
 
             </section>
