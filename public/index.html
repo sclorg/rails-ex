@@ -245,11 +245,9 @@ $ git push</pre>
 
                   <h3>Expanding on sample app</h3>
                   <p>
-                  To add REST and DB connectivity to this sample app, you can update the application to launch using the code made available via this repository.  Rename <code>config.ru</code> and <code>rails.ru</code> like so:
-<pre>$ mv config.ru config.ru.sample
-$ mv rails.ru config.ru
-$ git commit -a -m 'Some commit message'
-$ git push</pre>
+                  In order to access the example application, you have to remove the
+                  public/index.html file which serves as the welcome page. Other option is to make a
+                  request directly to `/articles` which will give you access to the blog example.
                   </p>
                   <p>
                   It will also be necessary to update your application to talk to your database back-end.  The <code>config/database.yml</code> file used by rails was set up in such a way that it will accept environment variables for your connection information that you pass to it.
