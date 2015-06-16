@@ -89,8 +89,8 @@
         },
         "output": {
           "to": {
-            "kind": "ImageStream",
-            "name": "rails-example"
+            "kind": "ImageStreamTag",
+            "name": "rails-example:latest"
           }
         },
         "triggers": [
