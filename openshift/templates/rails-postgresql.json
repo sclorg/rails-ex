@@ -119,11 +119,11 @@
         "strategy": {
           "type": "Recreate",
           "recreateParams": {
-            "post": {
+          "pre": {
               "failurePolicy": "Abort",
               "execNewPod": {
                 "command": [
-                  "./run.sh"
+                  "./migrate-database.sh"
                 ],
                 "containerName": "rails-example"
               }
