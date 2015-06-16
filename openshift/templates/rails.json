@@ -161,6 +161,14 @@
                   {
                     "name": "APPLICATION_DOMAIN",
                     "value": "${APPLICATION_DOMAIN}"
+                  },
+                  {
+                    "name": "APPLICATION_USER",
+                    "value": "${APPLICATION_USER}"
+                  },
+                  {
+                    "name": "APPLICATION_PASSWORD",
+                    "value": "${APPLICATION_PASSWORD}"
                   }
                 ],
                 "ports": [
@@ -205,6 +213,16 @@
       "description": "Your secret key for verifying the integrity of signed cookies",
       "generate": "expression",
       "from": "[a-z0-9]{127}"
+    },
+    {
+      "name": "APPLICATION_USER",
+      "description": "The application user that is used within the sample application to authorize access on pages",
+      "value": "openshift"
+    },
+    {
+      "name": "APPLICATION_PASSWORD",
+      "description": "The application password that is used within the sample application to authorize access on pages",
+      "value": "secret"
     }
   ]
 }
