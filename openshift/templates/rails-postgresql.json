@@ -205,6 +205,14 @@
                   {
                     "name": "APPLICATION_DOMAIN",
                     "value": "${APPLICATION_DOMAIN}"
+                  },
+                  {
+                    "name": "APPLICATION_USER",
+                    "value": "${APPLICATION_USER}"
+                  },
+                  {
+                    "name": "APPLICATION_PASSWORD",
+                    "value": "${APPLICATION_PASSWORD}"
                   }
                 ]
               }
@@ -335,16 +343,14 @@
       "from": "[a-z0-9]{127}"
     },
     {
-      "name": "ADMIN_USERNAME",
-      "description": "administrator username",
-      "generate": "expression",
-      "from": "admin[A-Z0-9]{3}"
+      "name": "APPLICATION_USER",
+      "description": "The application user that is used within the sample application to authorize access on pages",
+      "value": "openshift"
     },
     {
-      "name": "ADMIN_PASSWORD",
-      "description": "administrator password",
-      "generate": "expression",
-      "from": "[a-zA-Z0-9]{8}"
+      "name": "APPLICATION_PASSWORD",
+      "description": "The application password that is used within the sample application to authorize access on pages",
+      "value": "secret"
     },
     {
       "name": "DATABASE_SERVICE_NAME",
