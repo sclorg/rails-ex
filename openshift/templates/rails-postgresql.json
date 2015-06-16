@@ -193,6 +193,10 @@
                   {
                     "name": "POSTGRESQL_SHARED_BUFFERS",
                     "value": "${POSTGRESQL_SHARED_BUFFERS}"
+                  },
+                  {
+                    "name": "SECRET_KEY_BASE",
+                    "value": "${SECRET_KEY_BASE}"
                   }
                 ]
               }

@@ -153,6 +153,12 @@
               {
                 "name": "rails-example",
                 "image": "rails-example",
+                "env": [
+                  {
+                    "name": "SECRET_KEY_BASE",
+                    "value": "${SECRET_KEY_BASE}"
+                  }
+                ],
                 "ports": [
                   {
                     "containerPort": 8080

@@ -8,6 +8,10 @@ If you'd like to install it manually, follow [these directions](https://github.c
 
 The username/pw used for authentication in this application are openshift/secret.
 
+In order to access the example application, you have to remove the
+`public/index.html` which serves as the welcome page. Other option is to make a
+request directly to `/articles` which will give you access to the blog.
+
 OpenShift Considerations
 ------------------------
 These are some special considerations you may need to keep in mind when running your application on OpenShift.
