@@ -42,7 +42,7 @@
         "name": "rails-route"
       },
       "spec": {
-        "host": "${FRONTEND_ROUTE}",
+        "host": "${APPLICATION_DOMAIN}",
         "to": {
           "kind": "Service",
           "name": "rails-frontend"
@@ -197,6 +197,10 @@
                   {
                     "name": "SECRET_KEY_BASE",
                     "value": "${SECRET_KEY_BASE}"
+                  },
+                  {
+                    "name": "APPLICATION_DOMAIN",
+                    "value": "${APPLICATION_DOMAIN}"
                   }
                 ]
               }
@@ -310,9 +314,9 @@
       "description": "Set this to the relative path to your project if it is not in the root of your repository"
     },
     {
-      "name": "FRONTEND_ROUTE",
+      "name": "APPLICATION_DOMAIN",
       "description": "The exposed hostname that will route to the Rails service",
-      "value": "rails.app"
+      "value": "rails-example.openshiftapps.com"
     },
     {
       "name": "GITHUB_WEBHOOK_SECRET",
