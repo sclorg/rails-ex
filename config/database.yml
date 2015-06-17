@@ -2,7 +2,7 @@
 
 <% user = ENV.key?("POSTGRESQL_ADMIN_PASSWORD") ? "root" : ENV["POSTGRESQL_USER"] %>
 <% password = ENV.key?("POSTGRESQL_ADMIN_PASSWORD") ? ENV["POSTGRESQL_ADMIN_PASSWORD"] : ENV["POSTGRESQL_PASSWORD"] %>
-<% db_service = ENV["DATABASE_SERVICE_NAME"].upcase %>
+<% db_service = ENV.fetch("DATABASE_SERVICE_NAME","").upcase %>
 
 default: &default
   adapter: postgresql
