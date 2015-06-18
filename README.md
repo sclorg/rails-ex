@@ -1,36 +1,30 @@
 Rails Sample App on OpenShift
 ============================
 
-This is a quickstart Rails application for OpenShift v3.
+This is a quickstart Rails application for OpenShift v3 that you can use as a starting point to develop your own application and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
 
-The easiest way to install this application is to use the [OpenShift Instant Application](https://openshift.redhat.com/app/console/application_types).
-If you'd like to install it manually, follow [these directions](https://github.com/openshift/rails-ex/blob/master/README#manual-installation).  
+If you'd like to install it, follow [these directions](https://github.com/openshift/rails-ex/blob/master/README.md#installation).  
+
+In order to access the example blog application, you have to remove the
+`public/index.html` which serves as the welcome page. Another option is to make a
+request directly to `/articles` which will give you access to the blog.
 
 The username/pw used for authentication in this application are openshift/secret.
 
-In order to access the example application, you have to remove the
-`public/index.html` which serves as the welcome page. Other option is to make a
-request directly to `/articles` which will give you access to the blog.
-
-The steps in this assume that you have access to an OpenShift deployment; you must have an OpenShift deployment that you have access to in order to deploy this app.
+The following steps assume that you have access to an OpenShift deployment; you must have an OpenShift deployment that you have access to in order to deploy this app.
 
 OpenShift Considerations
 ------------------------
 These are some special considerations you may need to keep in mind when running your application on OpenShift.
 
-###Database
-Your application is configured to use your OpenShift database in Production mode.  Because it addresses these databases based on
- url, you will need to change these if you want to use your application outside of OpenShift.
-
 ###Assets
 Your application is set to precompile the assets every time you push to OpenShift.
 Any assets you commit to your repo will be preserved alongside those which are generated during the build.
 
-By adding the ```DISABLE_ASSET_COMPILATION=true``` environment variable value, you will disable asset compilation upon application deployment.
-See the [development](https://github.com/openshift/rails-ex/blog/master/README#development-mode) section on setting environment variables in OpenShift V3.
+By adding the ```DISABLE_ASSET_COMPILATION=true``` environment variable value to your BuildConfig, you will disable asset compilation upon application deployment.  See the [BuildConfig](http://docs.openshift.org/latest/dev_guide/builds.html#buildconfig-environment) documentation on setting environment variables for builds in OpenShift V3.
 
 ###Security
-Since these quickstarts are shared code, we had to take special consideration to ensure that security related configuration variables was unique across applications. To accomplish this, we modified some of the configuration files (shown in the table below). Now instead of using the same default values, OpenShift can generate these values using the generate from logic defined within the instant application's template.
+Since these quickstarts are shared code, we had to take special consideration to ensure that security related configuration variables are unique across applications. To accomplish this, we modified some of the configuration files (shown in the table below). Now instead of using the same default values, OpenShift can generate these values using the generate from logic defined within the template.
 
 OpenShift stores these generated values in configuration files that only exist for your deployed application and not in your code anywhere. Each of them will be unique so initialize_secret(:a) will differ from initialize_secret(:b) but they will also be consistent, so any time your application uses them (even across reboots), you know they will be the same.
 
@@ -45,23 +39,21 @@ When you develop your Rails application in OpenShift, you can also enable the 'd
 If you do so, OpenShift will run your application under 'development' mode. In development mode, your application will:  
 *  Show more detailed errors in the browser  
 *  Skip static assets (re)compilation  
-*  Skip web server restart, as the code is reloaded automatically  
-*  Skip `bundle` command if the Gemfile is not modified  
 
 Development environment can help you debug problems in your application in the same way as you do when developing on your local machine. However, we strongly advise you to not run your application in this mode in production.
 
-###Manual Installation: 
+###Installation: 
+These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html)
+
 1. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
 2. Clone your repository to your development machine
 3. Add a Ruby application from the rails template:
 
-		$ oc process -f openshift/templates/rails.json -v=SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex | oc create -f - 
-
+		$ oc process -f openshift/templates/rails-postgresql.json -v=SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex | oc create -f - 
 
 4. Note that creating from a template will automatically start a new build. Watch your build progress:
 
 		$ oc build-logs rails-example-1
-
 
 5. Wait for frontend pods to start up (this can take a few minutes):  
 
@@ -100,13 +92,6 @@ Development environment can help you debug problems in your application in the s
 
 In this case, the IP for frontend is 172.30.161.15 and it is on port 8080.  
 *Note*: you can also get this information from the web console.
-
-###Manual Installation: With PostgreSQL
-1. Follow the steps for the Manual installation above for all but step 3, instead use step 2 below.
-  - Note: The output from steps 5-6 may also display information about your database.
-2. Add a Ruby application from the rails-postgresql template: 
-
-		$ oc process -f openshift/templates/rails-postgresql.json -v=SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex | oc create -f - 
 
 
 ###Adding Webhooks and Making Code Changes
