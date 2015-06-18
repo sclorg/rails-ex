@@ -261,12 +261,12 @@ $ git push</pre>
                   Note: the rails-postgresql.json template creates the DB service and environment variables for you.
 
 <pre>
-osc env dc/frontend DATABASE_SERVICE_NAME=&lt;database service name&gt;
-osc env dc/frontend &lt;DATABASE_SERVICE_NAME&gt;_SERVICE_HOST=&lt;database service ip&gt;
-osc env dc/frontend &lt;DATABASE_SERVICE_NAME&gt;_SERVICE_PORT=&lt;database service port&gt;
-osc env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
-osc env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
-osc env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;
+os env dc/frontend DATABASE_SERVICE_NAME=&lt;database service name&gt;
+os env dc/frontend &lt;DATABASE_SERVICE_NAME&gt;_SERVICE_HOST=&lt;database service ip&gt;
+os env dc/frontend &lt;DATABASE_SERVICE_NAME&gt;_SERVICE_PORT=&lt;database service port&gt;
+os env dc/frontend POSTGRESQL_DATABASE=&lt;your created database&gt;
+os env dc/frontend POSTGRESQL_USER=&lt;your database user&gt;
+os env dc/frontend POSTGRESQL_PASSWORD=&lt;your database user's password&gt;
 </pre>
                   </p>
                   <p>
