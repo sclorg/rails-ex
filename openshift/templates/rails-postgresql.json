@@ -214,7 +214,13 @@
                     "name": "APPLICATION_PASSWORD",
                     "value": "${APPLICATION_PASSWORD}"
                   }
-                ]
+                ],
+                "livenessProbe": {
+                  "httpGet": {
+                    "path": "/health/live",
+                    "port": 8080
+                  }
+                }
               }
             ]
           }
