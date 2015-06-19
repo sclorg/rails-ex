@@ -24,7 +24,7 @@ Any assets you commit to your repo will be preserved alongside those which are g
 By adding the ```DISABLE_ASSET_COMPILATION=true``` environment variable value to your BuildConfig, you will disable asset compilation upon application deployment.  See the [BuildConfig](http://docs.openshift.org/latest/dev_guide/builds.html#buildconfig-environment) documentation on setting environment variables for builds in OpenShift V3.
 
 ###Security
-Since these quickstarts are shared code, we had to take special consideration to ensure that security related configuration variables are unique across applications. To accomplish this, we modified some of the configuration files (shown in the table below). Now instead of using the same default values, OpenShift can generate these values using the generate from logic defined within the template.
+Since these quickstarts are shared code, we had to take special consideration to ensure that security related configuration variables are unique across applications. To accomplish this, we modified some of the configuration files. Now instead of using the same default values, OpenShift can generate these values using the generate from logic defined within the template.
 
 OpenShift stores these generated values in configuration files that only exist for your deployed application and not in your code anywhere. Each of them will be unique so initialize_secret(:a) will differ from initialize_secret(:b) but they will also be consistent, so any time your application uses them (even across reboots), you know they will be the same.
 
