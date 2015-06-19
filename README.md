@@ -46,7 +46,7 @@ Development environment can help you debug problems in your application in the s
 These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html)
 
 1. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
-2. Clone your repository to your development machine
+2. Clone your repository to your development machine and cd to the repository directory
 3. Add a Ruby application from the rails template:
 
 		$ oc process -f openshift/templates/rails-postgresql.json -v=SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex | oc create -f - 
