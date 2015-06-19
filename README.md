@@ -5,13 +5,7 @@ This is a quickstart Rails application for OpenShift v3 that you can use as a st
 
 If you'd like to install it, follow [these directions](https://github.com/openshift/rails-ex/blob/master/README.md#installation).  
 
-In order to access the example blog application, you have to remove the
-`public/index.html` which serves as the welcome page. Another option is to make a
-request directly to `/articles` which will give you access to the blog.
-
-The username/pw used for authentication in this application are openshift/secret.
-
-The following steps assume that you have access to an OpenShift deployment; you must have an OpenShift deployment that you have access to in order to deploy this app.
+The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
 OpenShift Considerations
 ------------------------
@@ -28,7 +22,7 @@ Since these quickstarts are shared code, we had to take special consideration to
 
 OpenShift stores these generated values in configuration files that only exist for your deployed application and not in your code anywhere. Each of them will be unique so initialize_secret(:a) will differ from initialize_secret(:b) but they will also be consistent, so any time your application uses them (even across reboots), you know they will be the same.
 
-TLDR: OpenShift can generate and expose environment variables to our application automatically. Look at this quickstart for an example.
+TLDR: OpenShift can generate and expose environment variables to your application automatically. Look at this quickstart for an example.
 
 ###Development mode
 When you develop your Rails application in OpenShift, you can also enable the 'development' environment by setting the RAILS_ENV environment variable for your deploymentConfiguration, using the `oc` client, like:  
@@ -103,6 +97,13 @@ Since OpenShift V3 does not provide a git repository out of the box, you can con
 4. Navigate to your repository on GitHub and click on repository settings > webhooks  
 5. Paste your copied webhook url provided by OpenShift - Thats it!  
 6. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
+
+#### Enabling the Blog example
+In order to access the example blog application, you have to remove the
+`public/index.html` which serves as the welcome page and rebuild the application.
+Another option is to make a request directly to `/articles` which will give you access to the blog.
+
+The username/pw used for authentication in this application are openshift/secret.
 
 ###License
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
