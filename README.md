@@ -43,7 +43,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 2. Clone your repository to your development machine and cd to the repository directory
 3. Add a Ruby application from the rails template:
 
-		$ oc process -f openshift/templates/rails-postgresql.json -v=SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex | oc create -f - 
+		$ oc new-app openshift/templates/rails-postgresql.json -p SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex 
 
 4. Note that creating from a template will automatically start a new build. Watch your build progress:
 
