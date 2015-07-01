@@ -27,7 +27,7 @@ TLDR: OpenShift can generate and expose environment variables to your applicatio
 ###Development mode
 When you develop your Rails application in OpenShift, you can also enable the 'development' environment by setting the RAILS_ENV environment variable for your deploymentConfiguration, using the `oc` client, like:  
 
-		$ oc env dc/frontend RAILS_ENV=development
+		$ oc env dc/rails-postgresql-example RAILS_ENV=development
 
 
 If you do so, OpenShift will run your application under 'development' mode. In development mode, your application will:  
@@ -37,19 +37,23 @@ If you do so, OpenShift will run your application under 'development' mode. In d
 Development environment can help you debug problems in your application in the same way as you do when developing on your local machine. However, we strongly advise you to not run your application in this mode in production.
 
 ###Installation: 
-These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html)
+These steps assume your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html).  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
 1. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
 2. Clone your repository to your development machine and cd to the repository directory
 3. Add a Ruby application from the rails template:
 
-		$ oc new-app openshift/templates/rails-postgresql.json -p SOURCE_REPOSITORY_URL=https://github.com/yourusername/rails-ex 
+		$ oc new-app openshift/templates/rails-postgresql.json -p SOURCE_REPOSITORY_URL=https://github.com/< yourusername >/rails-ex 
 
-4. Note that creating from a template will automatically start a new build. Watch your build progress:
+4. Depending on the state of your system, and whether additional items need to be downloaded, it may take around a minute for your build to be started automatically.  If you do not want to wait, run
 
-		$ oc build-logs rails-example-1
+		$ oc start-build rails-postgresql-example
 
-5. Wait for frontend pods to start up (this can take a few minutes):  
+5. Once the build is running, watch your build progress  
+
+		$ oc build-logs rails-postgresql-example-1
+
+6. Wait for rails-postgresql-example pods to start up (this can take a few minutes):  
 
 		$ oc get pods -w
 
@@ -57,24 +61,14 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 	Sample output:  
 
 		NAME                    READY     REASON         RESTARTS   AGE
-		rails-example-1-build   1/1       Running        0          2m
-		NAME                      READY     REASON    RESTARTS   AGE
-		rails-frontend-1-deploy   0/1       Pending   0          0s
-		rails-frontend-1-deploy   0/1       Running   0         2s
-		rails-frontend-1-prehook   0/1       Pending   0         0s
-		rails-frontend-1-deploy   1/1       Running   0         3s
-		rails-example-1-build   0/1       ExitCode:0   0         2m
-		rails-frontend-1-prehook   0/1       Running   0         6s
-		rails-frontend-1-prehook   0/1       ExitCode:0   0         10s
-		rails-frontend-1-xlqrp   0/1       Pending   0         0s
-		rails-frontend-1-xlqrp   0/1       Running   0         1s
-		rails-frontend-1-xlqrp   1/1       Running   0         11s
-		rails-frontend-1-deploy   0/1       ExitCode:0   0         24s
-		rails-frontend-1-prehook   0/1       ExitCode:0   0         22s
+		postgresql-1-vk6ny                   1/1       Running        0          4m
+		rails-postgresql-example-1-build     0/1       ExitCode:0     0          3m
+		rails-postgresql-example-1-deploy    1/1       Running        0          34s
+		rails-postgresql-example-1-prehook   0/1       ExitCode:0     0          32s
 
 
 
-6. Check the IP and port the frontend service is running on:  
+7. Check the IP and port the rails-postgresql-example service is running on:  
 
 		$ oc get svc
 
@@ -82,11 +76,17 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 	Sample output:  
 
 		NAME             LABELS                              SELECTOR              IP(S)           PORT(S)
-		rails-frontend   template=rails-example   name=rails-frontend   172.30.161.15   8080/TCP
+		postgresql                 template=rails-postgresql-example   name=postgresql                 172.30.197.40    5432/TCP
+		rails-postgresql-example   template=rails-postgresql-example   name=rails-postgresql-example   172.30.205.117   8080/TCP
 
-In this case, the IP for frontend is 172.30.161.15 and it is on port 8080.  
+
+In this case, the IP for rails-postgresql-example rails-postgresql-example is 172.30.205.117 and it is on port 8080.  
 *Note*: you can also get this information from the web console.
 
+
+###Debugging Unexpected Failures
+
+Review some of the common tips and suggestions [here](https://github.com/openshift/origin/blob/master/docs/debugging-openshift.md).
 
 ###Adding Webhooks and Making Code Changes
 Since OpenShift V3 does not provide a git repository out of the box, you can configure your github repository to make a webhook call whenever you push your code.
