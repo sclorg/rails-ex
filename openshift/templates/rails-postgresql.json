@@ -213,6 +213,10 @@
                   {
                     "name": "APPLICATION_PASSWORD",
                     "value": "${APPLICATION_PASSWORD}"
+                  },
+                  {
+                    "name": "RAILS_ENV",
+                    "value": "${RAILS_ENV}"
                   }
                 ]
               }
@@ -351,6 +355,11 @@
       "name": "APPLICATION_PASSWORD",
       "description": "The application password that is used within the sample application to authorize access on pages",
       "value": "secret"
+    },
+    {
+      "name": "RAILS_ENV",
+      "description": "Environment under which the sample application will run. Could be set to production, development or test",
+      "value": "production"
     },
     {
       "name": "DATABASE_SERVICE_NAME",
