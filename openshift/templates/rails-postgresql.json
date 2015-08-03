@@ -176,15 +176,15 @@
                   },
                   {
                     "name": "POSTGRESQL_USER",
-                    "value": "${POSTGRESQL_USER}"
+                    "value": "${DATABASE_USER}"
                   },
                   {
                     "name": "POSTGRESQL_PASSWORD",
-                    "value": "${POSTGRESQL_PASSWORD}"
+                    "value": "${DATABASE_PASSWORD}"
                   },
                   {
                     "name": "POSTGRESQL_DATABASE",
-                    "value": "${POSTGRESQL_DATABASE}"
+                    "value": "${DATABASE_NAME}"
                   },
                   {
                     "name": "SECRET_KEY_BASE",
@@ -280,7 +280,7 @@
             "containers": [
               {
                 "name": "postgresql",
-                "image": "openshift/postgresql-92-centos7",
+                "image": "${POSTGRESQL_IMAGE}",
                 "ports": [
                   {
                     "containerPort": 5432
@@ -289,15 +289,15 @@
                 "env": [
                   {
                     "name": "POSTGRESQL_USER",
-                    "value": "${POSTGRESQL_USER}"
+                    "value": "${DATABASE_USER}"
                   },
                   {
                     "name": "POSTGRESQL_PASSWORD",
-                    "value": "${POSTGRESQL_PASSWORD}"
+                    "value": "${DATABASE_PASSWORD}"
                   },
                   {
                     "name": "POSTGRESQL_DATABASE",
-                    "value": "${POSTGRESQL_DATABASE}"
+                    "value": "${DATABASE_NAME}"
                   },
                   {
                     "name": "POSTGRESQL_MAX_CONNECTIONS",
@@ -367,21 +367,26 @@
       "value": "postgresql"
     },
     {
-      "name": "POSTGRESQL_USER",
+      "name": "DATABASE_USER",
       "description": "database username",
       "generate": "expression",
       "from": "user[A-Z0-9]{3}"
     },
     {
-      "name": "POSTGRESQL_PASSWORD",
+      "name": "DATABASE_PASSWORD",
       "description": "database password",
       "generate": "expression",
       "from": "[a-zA-Z0-9]{8}"
     },
     {
-      "name": "POSTGRESQL_DATABASE",
+      "name": "DATABASE_NAME",
       "description": "database name",
       "value": "root"
+    },
+    {
+      "name": "POSTGRESQL_IMAGE",
+      "description": "Image to use for postgresql",
+      "value": "openshift/postgresql-92-centos7"      
     },
     {
       "name": "POSTGRESQL_MAX_CONNECTIONS",
