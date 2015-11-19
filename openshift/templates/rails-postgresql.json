@@ -391,7 +391,7 @@
     {
       "name": "POSTGRESQL_MAX_CONNECTIONS",
       "description": "database max connections",
-      "value": "10"
+      "value": "100"
     },
     {
       "name": "POSTGRESQL_SHARED_BUFFERS",
