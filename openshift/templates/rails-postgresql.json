@@ -83,7 +83,7 @@
             "from": {
               "kind": "ImageStreamTag",
               "namespace": "openshift",
-              "name": "ruby:2.0"
+              "name": "ruby:2.2"
             }
           }
         },
@@ -273,7 +273,8 @@
               ],
               "from": {
                 "kind": "ImageStreamTag",
-                "name": "postgresql:9.2"
+                "name": "openshift",
+                "name": "postgresql:9.4"
               }
             }
           },
