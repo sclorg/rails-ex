@@ -221,7 +221,13 @@
                     "name": "RAILS_ENV",
                     "value": "${RAILS_ENV}"
                   }
-                ]
+                ],
+                "livenessProbe": {
+                  "httpGet": {
+                    "path": "/health/live",
+                    "port": 8080
+                  }
+                }
               }
             ]
           }
