@@ -25,12 +25,10 @@ development:
   #port:
 
 test:
-  <<: *default
-  #database: blog_test
-  #username:
-  #password:
-  #host:
-  #port:
+  adapter: sqlite3
+  database: db/test.sqlite3
+  pool: 5
+  timeout: 5000
 
 production:
   <<: *default
