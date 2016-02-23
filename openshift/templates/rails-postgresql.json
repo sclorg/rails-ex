@@ -202,10 +202,6 @@
                     "value": "${POSTGRESQL_SHARED_BUFFERS}"
                   },
                   {
-                    "name": "SECRET_KEY_BASE",
-                    "value": "${SECRET_KEY_BASE}"
-                  },
-                  {
                     "name": "APPLICATION_DOMAIN",
                     "value": "${APPLICATION_DOMAIN}"
                   },
