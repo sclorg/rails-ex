@@ -51,7 +51,7 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 
 5. Once the build is running, watch your build progress  
 
-		$ oc build-logs rails-postgresql-example-1
+		$ oc logs build/rails-postgresql-example-1
 
 6. Wait for rails-postgresql-example pods to start up (this can take a few minutes):  
 
