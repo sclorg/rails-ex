@@ -1,6 +1,6 @@
 Rails Quickstart adapted for Code Healthy Hackathon
 ===================================================
-Basic Epidemiology app able to give health advice on outbreaks e.g. Zika and potential dangers. Also capable of further expansion e.g. authentication, search optimisation. Linked to my own app on the old Openshift. I acknowledge work done on the rails quickstart for the old openshift and the next gen openshift platform..
+Basic Epidemiology app able to give health advice on outbreaks e.g. Zika and potential dangers. Also capable of further expansion e.g. authentication, search optimisation. Linked to my own app on the old Openshift. I acknowledge work done on the rails quickstart for the old openshift and the next gen openshift platform.
 The app now includes basic authentication and search optimisation.
 
 Old readme now.
