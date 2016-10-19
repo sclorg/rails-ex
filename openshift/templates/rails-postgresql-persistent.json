@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "rails-postgresql-persistent",
+    "name": "rails-pgsql-persistent",
     "annotations": {
       "description": "An example Rails application with a PostgreSQL database",
       "tags": "quickstart,ruby,rails,postgresql",
@@ -10,7 +10,7 @@
     }
   },
   "labels": {
-    "template": "rails-postgresql-persistent"
+    "template": "rails-pgsql-persistent"
   },
   "objects": [
     {
@@ -148,7 +148,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "rails-postgresql-persistent"
+                "rails-pgsql-persistent"
               ],
               "from": {
                 "kind": "ImageStreamTag",
@@ -174,7 +174,7 @@
           "spec": {
             "containers": [
               {
-                "name": "rails-postgresql-persistent",
+                "name": "rails-pgsql-persistent",
                 "image": " ",
                 "ports": [
                   {
@@ -414,7 +414,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "rails-postgresql-persistent"
+      "value": "rails-pgsql-persistent"
     },
     {
       "name": "NAMESPACE",
