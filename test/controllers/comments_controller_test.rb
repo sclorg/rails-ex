@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class CommentsControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class CommentsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @comment = comments(:one)
+  end
+
 end
