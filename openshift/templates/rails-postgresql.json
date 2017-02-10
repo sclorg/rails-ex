@@ -165,7 +165,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "rails-postgresql-example"
+                "${NAME}"
               ],
               "from": {
                 "kind": "ImageStreamTag",
@@ -191,7 +191,7 @@
           "spec": {
             "containers": [
               {
-                "name": "rails-postgresql-example",
+                "name": "${NAME}",
                 "image": " ",
                 "ports": [
                   {
