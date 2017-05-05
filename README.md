@@ -11,20 +11,20 @@ OpenShift Considerations
 ------------------------
 These are some special considerations you may need to keep in mind when running your application on OpenShift.
 
-###Assets
+### Assets
 Your application is set to precompile the assets every time you push to OpenShift.
 Any assets you commit to your repo will be preserved alongside those which are generated during the build.
 
 By adding the ```DISABLE_ASSET_COMPILATION=true``` environment variable value to your BuildConfig, you will disable asset compilation upon application deployment.  See the [BuildConfig](http://docs.openshift.org/latest/dev_guide/builds.html#buildconfig-environment) documentation on setting environment variables for builds in OpenShift V3.
 
-###Security
+### Security
 Since these quickstarts are shared code, we had to take special consideration to ensure that security related configuration variables are unique across applications. To accomplish this, we modified some of the configuration files. Now instead of using the same default values, OpenShift can generate these values using the generate from logic defined within the template.
 
 OpenShift stores these generated values in configuration files that only exist for your deployed application and not in your code anywhere. Each of them will be unique so initialize_secret(:a) will differ from initialize_secret(:b) but they will also be consistent, so any time your application uses them (even across reboots), you know they will be the same.
 
 TLDR: OpenShift can generate and expose environment variables to your application automatically. Look at this quickstart for an example.
 
-###Development mode
+### Development mode
 When you develop your Rails application in OpenShift, you can also enable the 'development' environment by setting the RAILS_ENV environment variable for your deploymentConfiguration, using the `oc` client, like:  
 
 		$ oc env dc/rails-postgresql-example RAILS_ENV=development
@@ -36,7 +36,7 @@ If you do so, OpenShift will run your application under 'development' mode. In d
 
 Development environment can help you debug problems in your application in the same way as you do when developing on your local machine. However, we strongly advise you to not run your application in this mode in production.
 
-###Installation: 
+### Installation
 These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
 1. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
@@ -84,11 +84,11 @@ In this case, the IP for rails-postgresql-example rails-postgresql-example is 17
 *Note*: you can also get this information from the web console.
 
 
-###Debugging Unexpected Failures
+### Debugging Unexpected Failures
 
 Review some of the common tips and suggestions [here](https://github.com/openshift/origin/blob/master/docs/debugging-openshift.md).
 
-###Adding Webhooks and Making Code Changes
+### Adding Webhooks and Making Code Changes
 Since OpenShift V3 does not provide a git repository out of the box, you can configure your github repository to make a webhook call whenever you push your code.
 
 1. From the Web Console homepage, navigate to your project
@@ -130,5 +130,5 @@ A redeploy will happen automatically due to the `ConfigChange` trigger.
  
 	$ oc deploy rails-postgresql-example --latest
 
-###License
+### License
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
