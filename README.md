@@ -1,5 +1,9 @@
-Rails Sample App on OpenShift
-============================
+Rails Quickstart adapted for Code Healthy Hackathon
+===================================================
+Basic Epidemiology app able to give health advice on outbreaks e.g. Zika and potential dangers. Also capable of further expansion e.g. authentication, search optimisation. Linked to my own app on the old Openshift. I acknowledge work done on the rails quickstart for the old openshift and the next gen openshift platform.
+The app now includes basic authentication and search optimisation.
+
+Old readme now.
 
 This is a quickstart Rails application for OpenShift v3 that you can use as a starting point to develop your own application and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
 
