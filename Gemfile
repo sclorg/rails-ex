@@ -12,7 +12,7 @@ gem 'rails', '~> 5.1.1'
 gem 'pg'
 # Support sqlite3 as a database for Active Record
 gem 'sqlite3'
-# Support redis as a key-value store for cable
+# Support redis as a key-value store for Action Cable
 gem 'redis'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
