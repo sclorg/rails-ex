@@ -1,3 +1,22 @@
+
+
+<!-- toc -->
+
+- [Rails Sample App on OpenShift](#rails-sample-app-on-openshift)
+  * [OpenShift Considerations](#openshift-considerations)
+    + [Assets](#assets)
+    + [Security](#security)
+    + [Development mode](#development-mode)
+    + [Installation](#installation)
+    + [Debugging Unexpected Failures](#debugging-unexpected-failures)
+    + [Adding Webhooks and Making Code Changes](#adding-webhooks-and-making-code-changes)
+    + [Enabling the Blog example](#enabling-the-blog-example)
+    + [Hot Deploy](#hot-deploy)
+    + [Compatibility](#compatibility)
+    + [License](#license)
+
+<!-- tocstop -->
+
 Rails Sample App on OpenShift
 ============================
 
@@ -101,7 +120,7 @@ Since OpenShift V3 does not provide a git repository out of the box, you can con
 8. Leave the defaults for the remaining fields - That's it!
 9. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
 
-#### Enabling the Blog example
+### Enabling the Blog example
 In order to access the example blog application, you have to remove the
 `public/index.html` which serves as the welcome page and rebuild the application.
 Another option is to make a request directly to `/articles` which will give you access to the blog.
@@ -129,6 +148,10 @@ A redeploy will happen automatically due to the `ConfigChange` trigger.
 **NOTICE: If the `ConfigChange`  trigger is not set, you need to run the redeploy manually:**
  
 	$ oc deploy rails-postgresql-example --latest
+
+### Compatibility
+
+This repository is compatible with Ruby 2.3 and higher, excluding any alpha or beta versions.
 
 ### License
 This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
