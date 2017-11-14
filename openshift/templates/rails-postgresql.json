@@ -576,14 +576,6 @@
       "displayName": "Custom RubyGems Mirror URL",
       "description": "The custom RubyGems mirror URL",
       "value": ""
-    },
-    {
-      "name": "RAILS_LOG_TO_STDOUT",
-      "required": true,
-      "displayName": "Log to STDOUT",
-      "description": "Set Rails logging to STDOUT so that OpenShift can manage the logs.",
-      "value": "true"
     }
-
   ]
 }
