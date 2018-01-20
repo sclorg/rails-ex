@@ -2,16 +2,11 @@
 
 <!-- toc -->
 
-- [Rails Sample App on OpenShift](#rails-sample-app-on-openshift)
-  * [OpenShift Considerations](#openshift-considerations)
-    + [Assets](#assets)
-    + [Security](#security)
-    + [Development mode](#development-mode)
-    + [Installation](#installation)
-    + [Debugging Unexpected Failures](#debugging-unexpected-failures)
-    + [Adding Webhooks and Making Code Changes](#adding-webhooks-and-making-code-changes)
-    + [Enabling the Blog example](#enabling-the-blog-example)
-    + [Hot Deploy](#hot-deploy)
+- [Rails App on OpenShift for a little expose on Mars](#rails-app-on-openshift-for-a-little-expose-on-mars)
+  * [Students](#students)
+    + [Dimitri](#dimitri)
+    + [Teu](#teu)
+  * [Development](#development)
     + [Compatibility](#compatibility)
     + [License](#license)
 
