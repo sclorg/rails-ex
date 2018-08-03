@@ -22,7 +22,7 @@ Rails Sample App on OpenShift
 
 This is a quickstart Rails application for OpenShift v3 that you can use as a starting point to develop your own application and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
 
-If you'd like to install it, follow [these directions](https://github.com/openshift/rails-ex/blob/master/README.md#installation).  
+If you'd like to install it, follow [these directions](https://github.com/sclorg/rails-ex/blob/master/README.md#installation).  
 
 The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
@@ -58,7 +58,7 @@ Development environment can help you debug problems in your application in the s
 ### Installation
 These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
-1. Fork a copy of [rails-ex](https://github.com/openshift/rails-ex)
+1. Fork a copy of [rails-ex](https://github.com/sclorg/rails-ex)
 2. Clone your repository to your development machine and cd to the repository directory
 3. Add a Ruby application from the rails template:
 
@@ -129,7 +129,7 @@ The username/pw used for authentication in this application are openshift/secret
 
 ### Hot Deploy
 
-In order to dynamically pick up changes made in your application source code, you need to set the `RAILS_ENV=development` parameter to the [oc new-app](https://docs.openshift.org/latest/cli_reference/basic_cli_operations.html#basic-cli-operations) command, while performing the [installation steps](https://github.com/openshift/rails-ex#installation) described in this README.
+In order to dynamically pick up changes made in your application source code, you need to set the `RAILS_ENV=development` parameter to the [oc new-app](https://docs.openshift.org/latest/cli_reference/basic_cli_operations.html#basic-cli-operations) command, while performing the [installation steps](https://github.com/sclorg/rails-ex#installation) described in this README.
 
 	$ oc new-app openshift/templates/rails-postgresql.json -p RAILS_ENV=development
 
