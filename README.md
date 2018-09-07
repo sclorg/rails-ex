@@ -137,7 +137,7 @@ To change your source code in the running container you need to [oc rsh](https:/
 
 	$ oc rsh <POD_ID>
 
-After you [oc rsh](hhttps://docs.okd.io/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into the running container, your current directory is set to `/opt/app-root/src`, where the source code is located.
+After you [oc rsh](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into the running container, your current directory is set to `/opt/app-root/src`, where the source code is located.
 
 To set your application back to the `production` environment you need to remove `RAILS_ENV` environment variable:
 
