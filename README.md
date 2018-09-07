@@ -34,7 +34,7 @@ These are some special considerations you may need to keep in mind when running 
 Your application is set to precompile the assets every time you push to OpenShift.
 Any assets you commit to your repo will be preserved alongside those which are generated during the build.
 
-By adding the ```DISABLE_ASSET_COMPILATION=true``` environment variable value to your BuildConfig, you will disable asset compilation upon application deployment.  See the [BuildConfig](http://docs.openshift.org/latest/dev_guide/builds.html#buildconfig-environment) documentation on setting environment variables for builds in OpenShift V3.
+By adding the ```DISABLE_ASSET_COMPILATION=true``` environment variable value to your BuildConfig, you will disable asset compilation upon application deployment.  See the [Basic Build Operations](https://docs.okd.io/latest/dev_guide/builds/basic_build_operations.html#starting-a-build) documentation on setting environment variables for builds in OpenShift V3.
 
 ### Security
 Since these quickstarts are shared code, we had to take special consideration to ensure that security related configuration variables are unique across applications. To accomplish this, we modified some of the configuration files. Now instead of using the same default values, OpenShift can generate these values using the generate from logic defined within the template.
@@ -56,7 +56,7 @@ If you do so, OpenShift will run your application under 'development' mode. In d
 Development environment can help you debug problems in your application in the same way as you do when developing on your local machine. However, we strongly advise you to not run your application in this mode in production.
 
 ### Installation
-These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
+These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.okd.io/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
 1. Fork a copy of [rails-ex](https://github.com/sclorg/rails-ex)
 2. Clone your repository to your development machine and cd to the repository directory
@@ -129,15 +129,15 @@ The username/pw used for authentication in this application are openshift/secret
 
 ### Hot Deploy
 
-In order to dynamically pick up changes made in your application source code, you need to set the `RAILS_ENV=development` parameter to the [oc new-app](https://docs.openshift.org/latest/cli_reference/basic_cli_operations.html#basic-cli-operations) command, while performing the [installation steps](https://github.com/sclorg/rails-ex#installation) described in this README.
+In order to dynamically pick up changes made in your application source code, you need to set the `RAILS_ENV=development` parameter to the [oc new-app](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#basic-cli-operations) command, while performing the [installation steps](https://github.com/sclorg/rails-ex#installation) described in this README.
 
 	$ oc new-app openshift/templates/rails-postgresql.json -p RAILS_ENV=development
 
-To change your source code in the running container you need to [oc rsh](https://docs.openshift.org/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into it.
+To change your source code in the running container you need to [oc rsh](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into it.
 
 	$ oc rsh <POD_ID>
 
-After you [oc rsh](https://docs.openshift.org/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into the running container, your current directory is set to `/opt/app-root/src`, where the source code is located.
+After you [oc rsh](https://docs.okd.io/latest/cli_reference/basic_cli_operations.html#troubleshooting-and-debugging-cli-operations) into the running container, your current directory is set to `/opt/app-root/src`, where the source code is located.
 
 To set your application back to the `production` environment you need to remove `RAILS_ENV` environment variable:
 
