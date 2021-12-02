@@ -21,3 +21,4 @@ tmp/
 
 # Ignore Byebug command history file.
 .byebug_history
+/config/master.key
