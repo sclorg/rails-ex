@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+export http_proxy=
+
 tst="$(readlink -e "$(dirname "$0")/test_cont.sh")"
 [[ -x "$tst" ]] || exit 1
 
