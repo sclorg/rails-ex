@@ -15,7 +15,9 @@
 m='/my-app'
 
 podman run -v"$PWD:${m}/:Z,ro" -ti$rm "$@" bash -c "
+    echo
     set -x
+    ruby -v
     cp -r ${m}/ /tmp \
       && cd /tmp${m}${inject} \
       && bundle install --path vendor \
