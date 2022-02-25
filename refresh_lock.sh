@@ -58,6 +58,7 @@ plt='bundle lock --add-platform ruby; bundle lock --remove-platform x86_64-linux
 tst="$(readlink -e "$(dirname "$0")/test_cont.sh")"
 [[ -x "$tst" ]] || abort "Could not find or run 'test_cont.sh', path: $tst"
 
+
 ## Args
 [[ "$1" == '-d' ]] && {
   DEBUG="$1"
