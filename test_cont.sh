@@ -1,5 +1,12 @@
 #!/usr/bin/bash
 
+[[ "$1" == "-d" ]] && {
+  DEBUG="$1"
+  shift
+  set -x
+  :
+} || DEBUG=
+
 [[ "$1" == "-i" ]] && {
   inject=" && { $2 ; }"
   shift 2
