@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
+gem 'rails', '~> 6'
 # Support postgresql as a database for Active Record
 gem 'pg'
 # Support sqlite3 as a database for Active Record
@@ -38,6 +38,8 @@ gem 'jbuilder'
 # gem 'capistrano-rails', group: :development
 
 gem 'listen'
+
+gem 'ffi', '>= 1.15.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
