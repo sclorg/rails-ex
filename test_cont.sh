@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+export http_proxy=
+
 [[ "$1" == "-d" ]] && {
   DEBUG="$1"
   shift
@@ -27,6 +29,8 @@ podman run -v"$PWD:${m}/:Z,ro" -ti$rm "$@" bash -c "
     ruby -v
     cp -r ${m}/ /tmp \
       && cd /tmp${m}${inject} \
+      && bundle config --local deployment 'true' \
+      && bundle config --local without "development:test" \
       && bundle install --path vendor \
       && {
         timeout 10 bundle exec rackup
