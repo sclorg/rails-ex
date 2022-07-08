@@ -9,6 +9,8 @@ export http_proxy=
   :
 } || DEBUG=
 
+export http_proxy=
+
 [[ "$1" == "-i" ]] && {
   inject=" && { $2 ; }"
   shift 2
