@@ -88,7 +88,7 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    i18n (1.10.0)
+    i18n (1.11.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
@@ -110,7 +110,7 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
-    pg (1.4.1)
+    pg (1.2.3)
     public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
@@ -207,7 +207,7 @@ DEPENDENCIES
   ffi (>= 1.15.1)
   jbuilder
   listen
-  pg
+  pg (~> 1.2.0)
   puma
   rails (~> 6)
   redis
