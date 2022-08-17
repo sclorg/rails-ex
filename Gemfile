@@ -41,6 +41,11 @@ gem 'listen'
 
 gem 'ffi', '>= 1.15.1'
 
+# ActiveRecord makes use of these bundled gems, as of Ruby 3.1, these requirements
+# have to be explicitly marked in a Gemfile.
+gem 'matrix'
+gem 'net-smtp'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
