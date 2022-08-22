@@ -1,4 +1,35 @@
-#!/usr/bin/bash
+##!/usr/bin/env bash
+#
+# Refreshes Gemfile.lock using `test_cont.sh` container build.
+#
+# Description:
+#
+#   - Creates Gemfile.lock backup
+#   - Generates lock file (output from test_cont.sh)
+#     - Injects platform modifications (bundle lock ...)
+#     - Subsequently; manually drops BUNDLED_WITH
+#     - and replaces 'x86_64-linux' with 'ruby' (for various arches)
+#     - Writes result into Gemfile.lock (and on output)
+#   - Tests the lock file for changes; subsequent run
+#     - build without platform modifications (no bundle lock ...)
+#     - Fails if there are any.
+#
+#
+# Usage:
+#
+#   $ ./refresh_lock.sh [ARGS] CONTAINER_IMAGE
+#
+#
+# ARGS, in order:
+#
+#   -d    Debug mode
+#
+#   -n    Do not check generated lock validity (=builds an app)
+#
+# Example:
+#
+#   $ ./refresh_lock.sh registry.access.redhat.com/ubi8/ruby-30
+#
 
 set -e
 set -o pipefail
@@ -48,8 +79,10 @@ lll () {
   echo -e '\n=================================================================\n'
 }
 
+
 ## Vars
 lck=Gemfile.lock
+export http_proxy=
 
 # Let's try removing x86_64 platform from lock
 plt='bundle lock --add-platform ruby; bundle lock --remove-platform x86_64-linux'
@@ -73,7 +106,9 @@ tst="$(readlink -e "$(dirname "$0")/test_cont.sh")"
   :
 } || NOCHECK=
 
-[[ -z "$1" ]] && abort "Error: No image specified."
+[[ "${1:0:1}" == '-' ]] && abort "Unknown arg: $1"
+
+[[ -z "$1" ]] && abort "No image specified."
 
 
 ## Main

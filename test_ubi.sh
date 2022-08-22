@@ -1,4 +1,14 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
+#
+# Runs the s2i build tests (using test_cont.sh) for all RH Ruby containers
+#
+# Usage:
+#
+#   $ ./test_ubi.sh
+#
+#   (no args)
+#
+
 
 export http_proxy=
 

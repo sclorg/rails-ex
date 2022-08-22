@@ -14,7 +14,7 @@ if [ -f Gemfile ]; then
     # which bundler will no longer do in future versions.
     # Instead please use `bundle config set --local deployment 'true'`,
     # and stop using this flag
-    bundle config --local deployment 'true'
+    bundle config set --local deployment 'true'
   fi
 
   if [[ "$RAILS_ENV" == "development" || "$RACK_ENV" == "development" ]]; then
@@ -31,7 +31,7 @@ if [ -f Gemfile ]; then
     # which bundler will no longer do in future versions.
     # Instead please use `bundle config set --local without ''test''`,
     # and stop using this flag
-    bundle config --local without "$BUNDLE_WITHOUT"
+    bundle config set --local without "$BUNDLE_WITHOUT"
   fi
 
   echo "---> Running 'bundle install ${ADDTL_BUNDLE_ARGS}' ..."
@@ -40,7 +40,7 @@ if [ -f Gemfile ]; then
   # which bundler will no longer do in future versions.
   # Instead please use `bundle config set --local path './bundle'`,
   # and stop using this flag
-  bundle config --local path './bundle'
+  bundle config set --local path './bundle'
   bundle install ${ADDTL_BUNDLE_ARGS}
 
   echo "---> Cleaning up unused ruby gems ..."

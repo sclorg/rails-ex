@@ -1,4 +1,24 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
+#
+# Simulates s2i build using podman = test for selected Ruby container
+#
+# Usage:
+#
+#   $ ./test_cont.sh [ARGS] [all other are passed to podman]
+#
+#     - you need to specify container image
+#
+#
+# ARGS, in order:
+#
+#   -i    injects (after cd to copied project folder) a custom scriplet
+#
+#   -k    keeps the container run after the test (removes --rm)
+#
+# Example:
+#
+#   $ ./test_cont.sh registry.access.redhat.com/ubi8/ruby-26
+#
 
 export http_proxy=
 
@@ -22,6 +42,8 @@ export http_proxy=
   shift
   :
 } || rm=' --rm'
+
+[[ "${1:0:1}" == '-' ]] && exit 2
 
 m='/my-app'
 
