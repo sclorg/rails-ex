@@ -85,7 +85,7 @@ lck=Gemfile.lock
 export http_proxy=
 
 # Let's try removing x86_64 platform from lock
-plt='bundle lock --add-platform ruby; bundle lock --remove-platform x86_64-linux'
+plt='bundle lock --add-platform ruby ||: ; bundle lock --remove-platform x86_64-linux ||: '
 
 # Test script can actually be used for lock generation as well
 tst="$(readlink -e "$(dirname "$0")/test_cont.sh")"
