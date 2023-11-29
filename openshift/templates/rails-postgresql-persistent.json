@@ -107,7 +107,7 @@
             "from": {
               "kind": "ImageStreamTag",
               "namespace": "${NAMESPACE}",
-              "name": "ruby:3.0-ubi8"
+              "name": "ruby:${RUBY_VERSION}"
             },
             "env": [
               {
@@ -483,6 +483,13 @@
       "required": true,
       "description": "The OpenShift Namespace where the ImageStream resides.",
       "value": "openshift"
+    },
+    {
+      "name": "RUBY_VERSION",
+      "displayName": "Ruby Version",
+      "description": "Version of Ruby image to be used (3.0-ubi8 by default).",
+      "required": true,
+      "value": "3.0-ubi8"
     },
     {
       "name": "MEMORY_LIMIT",
