@@ -155,7 +155,7 @@
       },
       "spec": {
         "strategy": {
-          "type": "RollingUpdate",
+          "type": "Recreate",
           "recreateParams": {
             "pre": {
               "failurePolicy": "Abort",
@@ -324,7 +324,7 @@
       },
       "spec": {
         "strategy": {
-          "type": "RollingUpdate"
+          "type": "Recreate"
         },
         "replicas": 1,
         "selector": {
