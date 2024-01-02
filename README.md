@@ -46,7 +46,7 @@ TLDR: OpenShift can generate and expose environment variables to your applicatio
 ### Development mode
 When you develop your Rails application in OpenShift, you can also enable the 'development' environment by setting the RAILS_ENV environment variable for your deploymentConfiguration, using the `oc` client, like:  
 
-		$ oc env dc/rails-postgresql-example RAILS_ENV=development
+		$ oc set env dc/rails-postgresql-example RAILS_ENV=development
 
 
 If you do so, OpenShift will run your application under 'development' mode. In development mode, your application will:  
@@ -141,7 +141,7 @@ After you [oc rsh](https://docs.okd.io/latest/cli_reference/basic_cli_operations
 
 To set your application back to the `production` environment you need to remove `RAILS_ENV` environment variable:
 
-	$ oc env dc/rails-postgresql-example RAILS_ENV-
+	$ oc set env dc/rails-postgresql-example RAILS_ENV-
 
 A redeploy will happen automatically due to the `ConfigChange` trigger.
 
