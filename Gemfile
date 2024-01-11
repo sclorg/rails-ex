@@ -40,6 +40,7 @@ gem 'jbuilder'
 gem 'listen'
 
 gem 'ffi', '>= 1.15.1'
+gem "sassc", "~> 2.1", "< 2.2"
 
 # ActiveRecord makes use of these bundled gems, as of Ruby 3.1, these requirements
 # have to be explicitly marked in a Gemfile.
