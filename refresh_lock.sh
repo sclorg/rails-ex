@@ -144,4 +144,4 @@ LOCK2="$(run "$@")"
 
 echo "OK"
 
-./test_ubi.sh 2>&1 | tee "test_ubi_$(basename "$(dirname)")-`date -I`.log"
+./test_ubi.sh 2>&1 | tee "test_ubi_$(basename "$PWD")-`date -I`.log"
