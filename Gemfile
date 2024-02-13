@@ -9,7 +9,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6'
 # Support postgresql as a database for Active Record
-gem 'pg', '~> 1.2.0'
+gem 'pg'
 # Support sqlite3 as a database for Active Record
 gem 'sqlite3'
 # Support redis as a key-value store for Action Cable
@@ -40,6 +40,7 @@ gem 'jbuilder'
 gem 'listen'
 
 gem 'ffi', '>= 1.15.1'
+gem "sassc", "~> 2.1", "< 2.2"
 
 # ActiveRecord makes use of these bundled gems, as of Ruby 3.1, these requirements
 # have to be explicitly marked in a Gemfile.
