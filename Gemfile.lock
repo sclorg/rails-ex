@@ -250,6 +250,3 @@ DEPENDENCIES
   tzinfo-data
   uglifier
   web-console
-
-BUNDLED WITH
-   2.5.14
