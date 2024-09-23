@@ -182,7 +182,7 @@
             "containers": [
               {
                 "name": "${NAME}",
-                "image": " ",
+                "image": "${NAME}:latest",
                 "ports": [
                   {
                     "containerPort": 8080
