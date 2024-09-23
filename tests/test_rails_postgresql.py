@@ -9,7 +9,8 @@ test_dir = Path(os.path.abspath(os.path.dirname(__file__)))
 
 VERSION=os.getenv("SINGLE_VERSION")
 if not VERSION:
-    VERSION="3.1-ubi8"
+    VERSION = "3.1-ubi8"
+
 
 class TestRailsAppWithPostgreSQLExTemplate:
 
@@ -33,9 +34,7 @@ class TestRailsAppWithPostgreSQLExTemplate:
         else:
             branch_to_test = "master"
         expected_output = "Welcome to your Rails application"
-        template_json = self.oc_api.get_raw_url_for_json(
-            container="rails-ex", branch=branch_to_test, dir="openshift/templates", filename="rails-postgresql-persistent.json"
-        )
+        template_json = "../openshift/templates/rails-postgresql-persistent.json"
         assert self.oc_api.deploy_template(
             template=template_json, name_in_template="rails-example", expected_output=expected_output,
             openshift_args=[
@@ -56,9 +55,7 @@ class TestRailsAppWithPostgreSQLExTemplate:
         else:
             branch_to_test = "master"
         expected_output = "Welcome to your Rails application"
-        template_json = self.oc_api.get_raw_url_for_json(
-            container="rails-ex", branch=branch_to_test, dir="openshift/templates", filename="rails-postgresql-persistent.json"
-        )
+        template_json = "../openshift/templates/rails-postgresql-persistent.json"
         assert self.oc_api.deploy_template(
             template=template_json, name_in_template="rails-example", expected_output=expected_output,
             openshift_args=[
