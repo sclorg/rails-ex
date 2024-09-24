@@ -152,18 +152,7 @@
       },
       "spec": {
         "strategy": {
-          "type": "Recreate",
-          "recreateParams": {
-            "pre": {
-              "failurePolicy": "Abort",
-              "execNewPod": {
-                "command": [
-                  "./migrate-database.sh"
-                ],
-                "containerName": "${NAME}"
-              }
-            }
-          }
+          "type": "Recreate"
         },
         "replicas": 1,
         "selector": {
@@ -396,7 +385,7 @@
         "annotations": {
           "description": "Defines how to deploy the database",
           "template.alpha.openshift.io/wait-for-ready": "true",
-          "image.openshift.io/triggers": "[{\"from\":{\"kind\":\"ImageStreamTag\",\"name\":\"postgresql:12-el8\", \"namespace\": \"openshift\"},\"fieldPath\": \"spec.template.spec.containers[0].image\"}]"
+          "image.openshift.io/triggers": "[{\"from\":{\"kind\":\"ImageStreamTag\",\"name\":\"postgresql:${POSTGRESQL_VERSION}\", \"namespace\": \"${NAMESPACE}\"},\"fieldPath\": \"spec.template.spec.containers[0].image\"}]"
         }
       },
       "spec": {
@@ -517,6 +506,13 @@
       "description": "Version of Ruby image to be used (3.1-ubi8 by default).",
       "required": true,
       "value": "3.1-ubi8"
+    },
+    {
+      "name": "POSTGRESQL_VERSION",
+      "displayName": "Postgresql Version",
+      "description": "Version of Postgresql image to be used (12-el8 by default).",
+      "required": true,
+      "value": "12-el8"
     },
     {
       "name": "MEMORY_LIMIT",
