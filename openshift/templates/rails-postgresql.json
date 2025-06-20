@@ -503,9 +503,9 @@
     {
       "name": "RUBY_VERSION",
       "displayName": "Ruby Version",
-      "description": "Version of Ruby image to be used (3.1-ubi8 by default).",
+      "description": "Version of Ruby image to be used (3.3-ubi8 by default).",
       "required": true,
-      "value": "3.1-ubi8"
+      "value": "3.3-ubi8"
     },
     {
       "name": "POSTGRESQL_VERSION",
@@ -538,7 +538,8 @@
     {
       "name": "SOURCE_REPOSITORY_REF",
       "displayName": "Git Reference",
-      "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch."
+      "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
+      "value": "3.3"
     },
     {
       "name": "CONTEXT_DIR",
