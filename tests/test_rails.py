@@ -9,12 +9,12 @@ test_dir = Path(os.path.abspath(os.path.dirname(__file__)))
 
 VERSION=os.getenv("SINGLE_VERSION")
 if not VERSION:
-    VERSION="3.1-ubi8"
+    VERSION="3.3-ubi9"
 
 class TestRailsAppExTemplate:
 
     def setup_method(self):
-        self.oc_api = OpenShiftAPI(pod_name_prefix="rails-example")
+        self.oc_api = OpenShiftAPI(pod_name_prefix="rails-example", shared_cluster=True)
         json_raw_file = self.oc_api.get_raw_url_for_json(
             container="s2i-ruby-container", dir="imagestreams", filename="ruby-rhel.json"
         )
@@ -36,7 +36,7 @@ class TestRailsAppExTemplate:
             template=template_json, name_in_template="rails-example", expected_output=expected_output,
             openshift_args=[f"SOURCE_REPOSITORY_REF={branch_to_test}", f"RUBY_VERSION={VERSION}", "NAME=rails-example"]
         )
-        assert self.oc_api.template_deployed(name_in_template="rails-example")
+        assert self.oc_api.is_template_deployed(name_in_template="rails-example")
         assert self.oc_api.check_response_inside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )
@@ -54,7 +54,7 @@ class TestRailsAppExTemplate:
             template=template_json, name_in_template="rails-example", expected_output=expected_output,
             openshift_args=[f"SOURCE_REPOSITORY_REF={branch_to_test}", f"RUBY_VERSION={VERSION}", "NAME=rails-example"]
         )
-        assert self.oc_api.template_deployed(name_in_template="rails-example")
+        assert self.oc_api.is_template_deployed(name_in_template="rails-example")
         assert self.oc_api.check_response_outside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )

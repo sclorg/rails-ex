@@ -9,20 +9,12 @@ test_dir = Path(os.path.abspath(os.path.dirname(__file__)))
 
 VERSION=os.getenv("SINGLE_VERSION")
 if not VERSION:
-    VERSION="3.1-ubi8"
+    VERSION="3.3-ubi9"
 
 class TestRailsAppWithPostgreSQLExTemplate:
 
     def setup_method(self):
-        self.oc_api = OpenShiftAPI(pod_name_prefix="rails-example")
-        json_raw_file = self.oc_api.get_raw_url_for_json(
-            container="s2i-ruby-container", dir="imagestreams", filename="ruby-rhel.json"
-        )
-        self.oc_api.import_is(path=json_raw_file, name="ruby")
-        json_raw_file = self.oc_api.get_raw_url_for_json(
-            container="postgresql-container", dir="imagestreams", filename="postgresql-rhel.json"
-        )
-        self.oc_api.import_is(path=json_raw_file, name="postgresql")
+        self.oc_api = OpenShiftAPI(pod_name_prefix="rails-example", shared_cluster=True)
 
     def teardown_method(self):
         self.oc_api.delete_project()
@@ -32,6 +24,14 @@ class TestRailsAppWithPostgreSQLExTemplate:
             branch_to_test = "3.3"
         else:
             branch_to_test = "master"
+        json_raw_file = self.oc_api.get_raw_url_for_json(
+            container="s2i-ruby-container", dir="imagestreams", filename="ruby-rhel.json"
+        )
+        self.oc_api.import_is(path=json_raw_file, name="ruby")
+        json_raw_file = self.oc_api.get_raw_url_for_json(
+            container="postgresql-container", dir="imagestreams", filename="postgresql-rhel.json"
+        )
+        self.oc_api.import_is(path=json_raw_file, name="postgresql")
         expected_output = "Welcome to your Rails application"
         template_json = self.oc_api.get_raw_url_for_json(
             container="rails-ex", branch=branch_to_test, dir="openshift/templates", filename="rails-postgresql-persistent.json"
@@ -45,7 +45,7 @@ class TestRailsAppWithPostgreSQLExTemplate:
                 "POSTGRESQL_VERSION=12-el8"
             ]
         )
-        assert self.oc_api.template_deployed(name_in_template="rails-example")
+        assert self.oc_api.is_template_deployed(name_in_template="rails-example")
         assert self.oc_api.check_response_inside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )
@@ -55,6 +55,15 @@ class TestRailsAppWithPostgreSQLExTemplate:
             branch_to_test = "3.3"
         else:
             branch_to_test = "master"
+        json_raw_file = self.oc_api.get_raw_url_for_json(
+            container="s2i-ruby-container", dir="imagestreams", filename="ruby-rhel.json"
+        )
+        self.oc_api.import_is(path=json_raw_file, name="ruby")
+        json_raw_file = self.oc_api.get_raw_url_for_json(
+            container="postgresql-container", dir="imagestreams", filename="postgresql-rhel.json"
+        )
+        self.oc_api.import_is(path=json_raw_file, name="postgresql")
+
         expected_output = "Welcome to your Rails application"
         template_json = self.oc_api.get_raw_url_for_json(
             container="rails-ex", branch=branch_to_test, dir="openshift/templates", filename="rails-postgresql-persistent.json"
@@ -68,7 +77,7 @@ class TestRailsAppWithPostgreSQLExTemplate:
                 "POSTGRESQL_VERSION=12-el8"
             ]
         )
-        assert self.oc_api.template_deployed(name_in_template="rails-example")
+        assert self.oc_api.is_template_deployed(name_in_template="rails-example")
         assert self.oc_api.check_response_outside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )
