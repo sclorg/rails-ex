@@ -36,7 +36,7 @@ class TestRailsAppExTemplate:
             template=template_json, name_in_template="rails-example", expected_output=expected_output,
             openshift_args=[f"SOURCE_REPOSITORY_REF={branch_to_test}", f"RUBY_VERSION={VERSION}", "NAME=rails-example"]
         )
-        assert self.oc_api.is_template_deployed(name_in_template="rails-example")
+        assert self.oc_api.is_template_deployed(name_in_template="rails-example", timeout=600)
         assert self.oc_api.check_response_inside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )
@@ -54,7 +54,7 @@ class TestRailsAppExTemplate:
             template=template_json, name_in_template="rails-example", expected_output=expected_output,
             openshift_args=[f"SOURCE_REPOSITORY_REF={branch_to_test}", f"RUBY_VERSION={VERSION}", "NAME=rails-example"]
         )
-        assert self.oc_api.is_template_deployed(name_in_template="rails-example")
+        assert self.oc_api.is_template_deployed(name_in_template="rails-example", timeout=600)
         assert self.oc_api.check_response_outside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )
