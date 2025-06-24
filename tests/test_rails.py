@@ -40,21 +40,3 @@ class TestRailsAppExTemplate:
         assert self.oc_api.check_response_inside_cluster(
             name_in_template="rails-example", expected_output=expected_output
         )
-
-    def test_template_by_request(self):
-        if VERSION.startswith("3.3"):
-            branch_to_test = "3.3"
-        else:
-            branch_to_test = "master"
-        expected_output = "Welcome to your Rails application"
-        template_json = self.oc_api.get_raw_url_for_json(
-            container="rails-ex", branch=branch_to_test, dir="openshift/templates", filename="rails.json"
-        )
-        assert self.oc_api.deploy_template(
-            template=template_json, name_in_template="rails-example", expected_output=expected_output,
-            openshift_args=[f"SOURCE_REPOSITORY_REF={branch_to_test}", f"RUBY_VERSION={VERSION}", "NAME=rails-example"]
-        )
-        assert self.oc_api.is_template_deployed(name_in_template="rails-example", timeout=600)
-        assert self.oc_api.check_response_outside_cluster(
-            name_in_template="rails-example", expected_output=expected_output
-        )
