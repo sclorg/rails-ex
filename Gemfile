@@ -5,11 +5,19 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
+# 4.0 made these non-default
+gem 'logger'
+gem 'bigdecimal'
+gem 'ostruct'
+gem 'tsort'
+gem 'mutex_m'
+gem 'benchmark'
+# To prevent https://stackoverflow.com/questions/79360526/
+gem 'concurrent-ruby', '1.3.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6'
+gem 'rails', '7.0.8.7'
 # Support postgresql as a database for Active Record
-gem 'pg'
+gem 'pg', '~> 1.6.3'
 # Support sqlite3 as a database for Active Record
 gem 'sqlite3'
 # Support redis as a key-value store for Action Cable
@@ -17,7 +25,9 @@ gem 'redis'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '~> 6.0'
+# To prevent https://github.com/sass/sassc-ruby/issues/146
+gem "sassc", "~> 2.1", "< 2.2"
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -40,7 +50,6 @@ gem 'jbuilder'
 gem 'listen'
 
 gem 'ffi', '>= 1.15.1'
-gem "sassc", "~> 2.1", "< 2.2"
 
 # ActiveRecord makes use of these bundled gems, as of Ruby 3.1, these requirements
 # have to be explicitly marked in a Gemfile.
@@ -65,3 +74,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
