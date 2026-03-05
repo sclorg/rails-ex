@@ -5,7 +5,16 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
+# 4.0 made these non-default
+gem 'logger'
+gem 'bigdecimal'
+gem 'ostruct'
+gem 'tsort'
+gem 'mutex_m'
+gem 'benchmark'
+gem 'base64'
+# Rubyzip 3.0 will introduce breaking changes, pin it
+gem 'rubyzip', '~> 2.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6'
 # Support postgresql as a database for Active Record
@@ -18,6 +27,8 @@ gem 'redis'
 gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails'
+# To prevent https://github.com/sass/sassc-ruby/issues/146
+gem "sassc", "~> 2.1", "< 2.2"
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -40,7 +51,6 @@ gem 'jbuilder'
 gem 'listen'
 
 gem 'ffi', '>= 1.15.1'
-gem "sassc", "~> 2.1", "< 2.2"
 
 # ActiveRecord makes use of these bundled gems, as of Ruby 3.1, these requirements
 # have to be explicitly marked in a Gemfile.
