@@ -12,12 +12,14 @@ gem 'ostruct'
 gem 'tsort'
 gem 'mutex_m'
 gem 'benchmark'
+gem 'base64'
+gem 'rubyzip', '~> 2.3.0'
 # To prevent https://stackoverflow.com/questions/79360526/
 gem 'concurrent-ruby', '1.3.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '7.0.8.7'
+gem 'rails', '~> 6'
 # Support postgresql as a database for Active Record
-gem 'pg', '~> 1.6.3'
+gem 'pg'
 # Support sqlite3 as a database for Active Record
 gem 'sqlite3'
 # Support redis as a key-value store for Action Cable
