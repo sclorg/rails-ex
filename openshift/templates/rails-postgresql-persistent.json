@@ -177,7 +177,7 @@
             "initContainers": [
               {
                 "name": "ruby-init-container",
-                "image": " ",
+                "image": "${NAME}:latest",
                 "command": [
                   "./migrate-database.sh"
                 ],
@@ -440,7 +440,7 @@
             "containers": [
               {
                 "name": "postgresql",
-                "image": " ",
+                "image": "postgresql:${POSTGRESQL_VERSION}",
                 "ports": [
                   {
                     "containerPort": 5432
