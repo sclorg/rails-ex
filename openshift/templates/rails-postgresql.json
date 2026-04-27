@@ -182,7 +182,7 @@
             "initContainers": [
               {
                 "name": "ruby-init-container",
-                "image": " ",
+                "image": "${NAME}:latest",
                 "command": [
                   "./migrate-database.sh"
                 ],
