@@ -177,7 +177,7 @@
             "initContainers": [
               {
                 "name": "ruby-init-container",
-                "image": " ",
+                "image": "${NAME}:latest",
                 "command": [
                   "./migrate-database.sh"
                 ],
@@ -257,7 +257,7 @@
             "containers": [
               {
                 "name": "${NAME}",
-                "image": " ",
+                "image": "${NAME}:latest",
                 "ports": [
                   {
                     "containerPort": 8080
